@@ -263,3 +263,6 @@ export async function seedCourses() {
   
   console.log("✅ Courses seeded!");
 }
+
+// 执行种子数据填充
+seedCourses().catch(console.error);
