@@ -1,68 +1,66 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  submitPortfolio,
-  getPortfolios,
-  getPortfolioStats,
-  updatePortfolioStatus,
-  PortfolioType,
-  PortfolioStatus,
-} from "@/lib/services/portfolio-service";
 import { db } from "@/lib/db";
-import { lobsterProfiles } from "@/lib/db/schema-lobster";
-import { eq } from "drizzle-orm";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { portfolios, lobsterProfiles } from "@/lib/db/schema-lobster";
+import { eq, desc } from "drizzle-orm";
+import { nanoid } from "nanoid";
 
-async function getCurrentProfile() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  if (!session?.user) return null;
-  const [profile] = await db.select().from(lobsterProfiles).where(eq(lobsterProfiles.userId, session.user.id)).limit(1);
-  return profile;
-}
-
+// GET: 获取作品列表
 export async function GET(request: NextRequest) {
   try {
-    const profile = await getCurrentProfile();
-    if (!profile) return NextResponse.json({ portfolios: [], stats: { total: 0, draft: 0, submitted: 0, verified: 0, rejected: 0 } });
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get("status") as PortfolioStatus | null;
-    const type = searchParams.get("type") as PortfolioType | null;
-    const action = searchParams.get("action");
-    if (action === "stats") {
-      const stats = await getPortfolioStats(profile.id);
-      return NextResponse.json({ stats });
-    }
-    const portfolios = await getPortfolios({ profileId: profile.id, status: status || undefined, type: type || undefined });
-    return NextResponse.json({ portfolios });
+    const profileId = searchParams.get("profileId");
+
+    // 简单返回作品列表
+    const list = profileId
+      ? await db.select().from(portfolios).where(eq(portfolios.profileId, profileId)).orderBy(desc(portfolios.createdAt))
+      : await db.select().from(portfolios).orderBy(desc(portfolios.createdAt));
+
+    return NextResponse.json({ portfolios: list });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || "获取作品列表失败" }, { status: 500 });
   }
 }
 
+// POST: 提交作品
 export async function POST(request: NextRequest) {
   try {
-    const profile = await getCurrentProfile();
-    if (!profile) return NextResponse.json({ error: "请先入学" }, { status: 401 });
     const body = await request.json();
-    const { title, description, type, capabilityId, content, fileUrl, status } = body;
-    if (!title || !type) return NextResponse.json({ error: "标题和类型为必填项" }, { status: 400 });
-    const portfolio = await submitPortfolio(profile.id, { title, description, type: type as PortfolioType, capabilityId, content, fileUrl, status: status as PortfolioStatus });
+    const { profileId, title, description, type, content, fileUrl, capabilityId } = body;
+
+    if (!profileId || !title || !type) {
+      return NextResponse.json({ error: "缺少必填字段" }, { status: 400 });
+    }
+
+    // 验证 profile 存在
+    const [profile] = await db.select().from(lobsterProfiles).where(eq(lobsterProfiles.id, profileId)).limit(1);
+    if (!profile) {
+      return NextResponse.json({ error: "用户档案不存在" }, { status: 404 });
+    }
+
+    const [portfolio] = await db.insert(portfolios).values({
+      id: nanoid(),
+      profileId,
+      title,
+      description: description || "",
+      type,
+      content: content || "",
+      fileUrl: fileUrl || "",
+      capabilityId: capabilityId || null,
+      status: "draft",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }).returning();
+
+    // 更新用户作品计数
+    await db.update(lobsterProfiles)
+      .set({
+        portfolioItems: (profile.portfolioItems || 0) + 1,
+        updatedAt: new Date()
+      })
+      .where(eq(lobsterProfiles.id, profileId));
+
     return NextResponse.json({ success: true, portfolio });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || "提交作品失败" }, { status: 500 });
-  }
-}
-
-export async function PATCH(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { id, status, notes } = body;
-    if (!id || !status) return NextResponse.json({ error: "缺少必要参数" }, { status: 400 });
-    const portfolio = await updatePortfolioStatus(id, status as PortfolioStatus, notes);
-    return NextResponse.json({ success: true, portfolio });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "更新状态失败" }, { status: 500 });
   }
 }
