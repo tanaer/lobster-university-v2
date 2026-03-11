@@ -1,7 +1,7 @@
-import { db } from "../index";
-import { courses } from "./schema-lobster";
+import { db } from "./index";
+import { skillCourses } from "./schema-lobster";
 
-const seedCourses = [
+const seedCoursesData = [
   // 模块 1: 搜索与知识获取
   {
     id: "course_web_search_basics",
@@ -242,18 +242,17 @@ const seedCourses = [
     order: 51,
   },
 ];
-
 export async function seedCourses() {
   console.log("🌱 Seeding courses...");
   
-  for (const course of seedCourses) {
-    await db.insert(courses).values({
+  for (const course of seedCoursesData) {
+    await db.insert(skillCourses).values({
       ...course,
       enrollCount: 0,
       completionRate: 0,
       published: true,
     }).onConflictDoUpdate({
-      target: courses.id,
+      target: skillCourses.id,
       set: {
         ...course,
         updatedAt: new Date(),
