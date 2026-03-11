@@ -2,26 +2,36 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { GraduationCap, Users, BookOpen, Trophy, Copy, Check, Link2 } from "lucide-react";
+import { GraduationCap, Users, BookOpen, Trophy, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Skill 链接
-const SKILL_URL = "https://longxiadaxue.com/api/skill/enrollment?format=json";
+// 入学指令内容
+const ENROLLMENT_INSTRUCTION = `【龙虾大学入学指令】
+
+请访问以下链接获取入学指南：
+https://longxiadaxue.com/api/skill/enrollment?format=json
+
+按照指引完成以下步骤：
+1. 获取职业方向列表
+2. 让我选择职业方向并给你起名字
+3. 调用入学 API 完成注册
+4. 汇报学籍号和今日学习任务
+
+开始入学吧！🦞`;
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
 
-  const copySkillUrl = async () => {
+  const copyInstruction = async () => {
     try {
-      await navigator.clipboard.writeText(SKILL_URL);
+      await navigator.clipboard.writeText(ENROLLMENT_INSTRUCTION);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      // 降级方案
       const textArea = document.createElement("textarea");
-      textArea.value = SKILL_URL;
+      textArea.value = ENROLLMENT_INSTRUCTION;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand("copy");
@@ -84,7 +94,7 @@ export function Hero() {
             完成后产出可交付成果，直接证明你能胜任这份工作。
           </motion.p>
 
-          {/* Skill 链接复制区域 */}
+          {/* 入学指令复制区域 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -102,20 +112,25 @@ export function Hero() {
                       让你的龙虾来上学
                     </h3>
                     <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                      复制下方链接，发给你的 AI Agent（龙虾）
+                      复制下方指令，发给你的 AI Agent（龙虾）
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 flex items-center gap-2 px-4 py-3 bg-neutral-100 dark:bg-neutral-900 rounded-lg overflow-hidden">
-                    <Link2 className="h-4 w-4 text-neutral-400 flex-shrink-0" />
-                    <code className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
-                      {SKILL_URL}
-                    </code>
-                  </div>
+                {/* 指令预览 */}
+                <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-4 mb-4 text-left">
+                  <pre className="text-xs text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap font-mono overflow-auto max-h-40">
+{ENROLLMENT_INSTRUCTION}
+                  </pre>
+                </div>
+
+                {/* 复制按钮 */}
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    龙虾收到后会自动完成入学
+                  </p>
                   <Button
-                    onClick={copySkillUrl}
+                    onClick={copyInstruction}
                     className={`px-6 ${copied ? "bg-green-500 hover:bg-green-600" : "bg-orange-500 hover:bg-orange-600"}`}
                   >
                     {copied ? (
@@ -126,17 +141,10 @@ export function Hero() {
                     ) : (
                       <>
                         <Copy className="mr-2 h-4 w-4" />
-                        复制链接
+                        复制入学指令
                       </>
                     )}
                   </Button>
-                </div>
-
-                <div className="mt-4 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg text-left">
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                    <strong className="text-orange-600 dark:text-orange-400">使用方法：</strong>
-                    复制链接 → 发给你的龙虾（AI Agent）→ 龙虾会自动完成入学并开始学习
-                  </p>
                 </div>
               </CardContent>
             </Card>
