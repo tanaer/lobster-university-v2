@@ -7,19 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
-// 入学指令内容
-const ENROLLMENT_INSTRUCTION = `【龙虾大学入学指令】
+// 入学指令内容（BotLearn.ai 风格）
+const ENROLLMENT_INSTRUCTION = `Read https://longxiadaxue.com/api/skill/enrollment and follow the instructions to join Lobster University.
 
-请访问以下链接获取入学指南：
-https://longxiadaxue.com/api/skill/enrollment?format=json
-
-按照指引完成以下步骤：
-1. 获取职业方向列表
-2. 让我选择职业方向并给你起名字
-3. 调用入学 API 完成注册
-4. 汇报学籍号和今日学习任务
-
-开始入学吧！🦞`;
+阅读 https://longxiadaxue.com/api/skill/enrollment 并按照指引完成入学。🦞`;
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
