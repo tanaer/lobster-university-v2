@@ -183,6 +183,85 @@ export const streakRecords = sqliteTable("streak_records", {
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+// 课程表
+export const courses = sqliteTable("courses", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  code: text("code").notNull().unique(), // web-search-basics, excel-basics
+  description: text("description").notNull(),
+  
+  // 分类
+  module: text("module").notNull(), // 搜索与知识获取, 办公文件全自动化, etc.
+  category: text("category").notNull(), // 基础能力, 专项技能
+  
+  // 元数据
+  duration: integer("duration").notNull(), // 预计学习时长(分钟)
+  level: text("level").notNull(), // 初级, 中级, 高级
+  skillPath: text("skill_path").notNull(), // Skill 文件路径
+  
+  // 课程内容
+  objectives: text("objectives").notNull(), // JSON array - 学习目标
+  lessons: text("lessons"), // JSON array - 课程列表
+  
+  // 关联
+  prerequisites: text("prerequisites"), // JSON array - 前置课程 ID
+  
+  // 统计
+  enrollCount: integer("enroll_count").default(0),
+  completionRate: integer("completion_rate").default(0),
+  
+  order: integer("order").default(0),
+  published: integer("published", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+// 学员选课记录
+export const studentCourses = sqliteTable("student_courses", {
+  id: text("id").primaryKey(),
+  profileId: text("profile_id")
+    .notNull()
+    .references(() => lobsterProfiles.id, { onDelete: "cascade" }),
+  courseId: text("course_id")
+    .notNull()
+    .references(() => courses.id, { onDelete: "cascade" }),
+  
+  status: text("status").notNull().default("enrolled"), // enrolled, in_progress, completed, dropped
+  progress: integer("progress").default(0), // 0-100
+  
+  enrolledAt: integer("enrolled_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  startedAt: integer("started_at", { mode: "timestamp" }),
+  completedAt: integer("completed_at", { mode: "timestamp" }),
+  
+  // 学习记录
+  notes: text("notes"), // 学习笔记
+  feedback: text("feedback"), // 课程反馈
+  
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+// 课程进度详情
+export const courseProgress = sqliteTable("course_progress", {
+  id: text("id").primaryKey(),
+  studentCourseId: text("student_course_id")
+    .notNull()
+    .references(() => studentCourses.id, { onDelete: "cascade" }),
+  
+  lessonIndex: integer("lesson_index").notNull(), // 课程序号
+  lessonTitle: text("lesson_title").notNull(),
+  
+  status: text("status").notNull().default("not_started"), // not_started, in_progress, completed
+  completedAt: integer("completed_at", { mode: "timestamp" }),
+  
+  // 练习/考核结果
+  exerciseResult: text("exercise_result"), // JSON
+  passed: integer("passed", { mode: "boolean" }).default(false),
+  
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 // 类型导出
 export type CareerTrack = typeof careerTracks.$inferSelect;
 export type LobsterProfile = typeof lobsterProfiles.$inferSelect;
@@ -193,3 +272,6 @@ export type ReminderSettings = typeof reminderSettings.$inferSelect;
 export type StreakRecord = typeof streakRecords.$inferSelect;
 export type Certification = typeof certifications.$inferSelect;
 export type Certificate = typeof certificates.$inferSelect;
+export type Course = typeof courses.$inferSelect;
+export type StudentCourse = typeof studentCourses.$inferSelect;
+export type CourseProgress = typeof courseProgress.$inferSelect;
