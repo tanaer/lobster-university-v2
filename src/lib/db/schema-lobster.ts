@@ -98,7 +98,7 @@ export const portfolios = sqliteTable("portfolios", {
   // 作品信息
   title: text("title").notNull(),
   description: text("description"),
-  type: text("type").notNull(), // report/document/code/design/etc
+  type: text("type").notNull(), // report/document/code/design/media/case_study/etc
   capabilityId: text("capability_id"), // 对应的能力
   
   // 内容
@@ -106,12 +106,43 @@ export const portfolios = sqliteTable("portfolios", {
   fileUrl: text("file_url"), // 文件链接
   
   // 状态
-  status: text("status").default("draft"), // draft/submitted/reviewed/approved
+  status: text("status").default("draft"), // draft/submitted/verified/rejected
   reviewedAt: integer("reviewed_at", { mode: "timestamp" }),
   reviewerNotes: text("reviewer_notes"),
   
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+// 认证申请表
+export const certifications = sqliteTable("certifications", {
+  id: text("id").primaryKey(),
+  profileId: text("profile_id")
+    .notNull()
+    .references(() => lobsterProfiles.id, { onDelete: "cascade" }),
+  trackId: text("track_id")
+    .notNull()
+    .references(() => careerTracks.id),
+  level: integer("level").notNull(), // 1-5
+  status: text("status").notNull().default("pending"), // pending, approved, rejected
+  appliedAt: integer("applied_at", { mode: "timestamp" }).notNull(),
+  approvedAt: integer("approved_at", { mode: "timestamp" }),
+  certificateId: text("certificate_id"),
+  notes: text("notes"), // 审核备注
+});
+
+// 证书表
+export const certificates = sqliteTable("certificates", {
+  id: text("id").primaryKey(),
+  certificationId: text("certification_id")
+    .notNull()
+    .references(() => certifications.id),
+  profileId: text("profile_id").notNull(),
+  trackId: text("track_id").notNull(),
+  level: integer("level").notNull(),
+  issuedAt: integer("issued_at", { mode: "timestamp" }).notNull(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }),
+  verifyUrl: text("verify_url").notNull(),
 });
 
 // 能力评估表
@@ -160,3 +191,5 @@ export type Portfolio = typeof portfolios.$inferSelect;
 export type Assessment = typeof assessments.$inferSelect;
 export type ReminderSettings = typeof reminderSettings.$inferSelect;
 export type StreakRecord = typeof streakRecords.$inferSelect;
+export type Certification = typeof certifications.$inferSelect;
+export type Certificate = typeof certificates.$inferSelect;
