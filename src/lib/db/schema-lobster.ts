@@ -114,8 +114,49 @@ export const portfolios = sqliteTable("portfolios", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+// 能力评估表
+export const assessments = sqliteTable("assessments", {
+  id: text("id").primaryKey(),
+  profileId: text("profile_id")
+    .notNull()
+    .references(() => lobsterProfiles.id, { onDelete: "cascade" }),
+  dimension: text("dimension").notNull(), // task_completion, portfolio_quality, learning_efficiency, autonomy, job_match
+  score: integer("score").notNull(), // 0-100
+  answers: text("answers"), // JSON
+  assessedAt: integer("assessed_at", { mode: "timestamp" }).notNull(),
+});
+
+// 每日提醒设置表
+export const reminderSettings = sqliteTable("reminder_settings", {
+  id: text("id").primaryKey(),
+  profileId: text("profile_id")
+    .notNull()
+    .references(() => lobsterProfiles.id, { onDelete: "cascade" })
+    .unique(),
+  enabled: integer("enabled", { mode: "boolean" }).default(true),
+  reminderTime: text("reminder_time").default("09:00"),
+  notifyBeforeGoal: integer("notify_before_goal", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+// 学习连续记录表
+export const streakRecords = sqliteTable("streak_records", {
+  id: text("id").primaryKey(),
+  profileId: text("profile_id")
+    .notNull()
+    .references(() => lobsterProfiles.id, { onDelete: "cascade" }),
+  date: text("date").notNull(), // YYYY-MM-DD
+  studyMinutes: integer("study_minutes").default(0),
+  goalMet: integer("goal_met", { mode: "boolean" }).default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 // 类型导出
 export type CareerTrack = typeof careerTracks.$inferSelect;
 export type LobsterProfile = typeof lobsterProfiles.$inferSelect;
 export type StudyLog = typeof studyLogs.$inferSelect;
 export type Portfolio = typeof portfolios.$inferSelect;
+export type Assessment = typeof assessments.$inferSelect;
+export type ReminderSettings = typeof reminderSettings.$inferSelect;
+export type StreakRecord = typeof streakRecords.$inferSelect;

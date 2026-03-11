@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { DailyReminder } from "@/components/dashboard/daily-reminder";
 
 // 成就定义
 const achievements = [
@@ -54,88 +55,58 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* 经验进度 */}
-        <Card className="bg-slate-800/50 border-slate-700 mb-6">
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-white font-medium">等级 {data.level}</span>
-              <span className="text-slate-400 text-sm">
-                {data.exp} / {data.nextLevel} EXP
-              </span>
-            </div>
-            <div className="w-full h-4 bg-slate-700 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-500"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-          </CardContent>
-        </Card>
+        {/* 主布局：左侧每日提醒，右侧统计 */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          {/* 左侧：每日提醒 */}
+          <div className="lg:col-span-1">
+            <DailyReminder />
+          </div>
 
-        {/* 今日进度 */}
-        <Card className="bg-slate-800/50 border-slate-700 mb-6">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              📅 今日学习
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-4">
-              <div className="flex-1">
+          {/* 右侧：统计信息 */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* 经验进度 */}
+            <Card className="bg-slate-800/50 border-slate-700">
+              <CardContent className="pt-6">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-slate-400">今日已学习</span>
-                  <span className="text-cyan-400 font-bold">
-                    {data.todayStudied} / {data.dailyGoal} 分钟
+                  <span className="text-white font-medium">等级 {data.level}</span>
+                  <span className="text-slate-400 text-sm">
+                    {data.exp} / {data.nextLevel} EXP
                   </span>
                 </div>
-                <div className="w-full h-3 bg-slate-700 rounded-full overflow-hidden">
+                <div className="w-full h-4 bg-slate-700 rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      todayProgress >= 100
-                        ? "bg-green-500"
-                        : "bg-cyan-500"
-                    }`}
-                    style={{ width: `${Math.min(todayProgress, 100)}%` }}
+                    className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-500"
+                    style={{ width: `${progressPercent}%` }}
                   />
                 </div>
-              </div>
-              <div className="text-4xl">
-                {todayProgress >= 100 ? "✅" : "📚"}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
-        {/* 统计卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardContent className="pt-6 text-center">
-              <div className="text-3xl mb-2">⏱️</div>
-              <div className="text-2xl font-bold text-white">{data.totalStudyTime}</div>
-              <div className="text-slate-400 text-sm">分钟学习</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardContent className="pt-6 text-center">
-              <div className="text-3xl mb-2">✅</div>
-              <div className="text-2xl font-bold text-white">{data.completedTasks}</div>
-              <div className="text-slate-400 text-sm">完成任务</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardContent className="pt-6 text-center">
-              <div className="text-3xl mb-2">🔥</div>
-              <div className="text-2xl font-bold text-white">{data.streak}</div>
-              <div className="text-slate-400 text-sm">天连续学习</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardContent className="pt-6 text-center">
-              <div className="text-3xl mb-2">📦</div>
-              <div className="text-2xl font-bold text-white">{data.portfolioItems}</div>
-              <div className="text-slate-400 text-sm">作品集</div>
-            </CardContent>
-          </Card>
+            {/* 统计卡片 */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="bg-slate-800/50 border-slate-700">
+                <CardContent className="pt-6 text-center">
+                  <div className="text-3xl mb-2">⏱️</div>
+                  <div className="text-2xl font-bold text-white">{data.totalStudyTime}</div>
+                  <div className="text-slate-400 text-sm">分钟学习</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-slate-800/50 border-slate-700">
+                <CardContent className="pt-6 text-center">
+                  <div className="text-3xl mb-2">✅</div>
+                  <div className="text-2xl font-bold text-white">{data.completedTasks}</div>
+                  <div className="text-slate-400 text-sm">完成任务</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-slate-800/50 border-slate-700">
+                <CardContent className="pt-6 text-center">
+                  <div className="text-3xl mb-2">📦</div>
+                  <div className="text-2xl font-bold text-white">{data.portfolioItems}</div>
+                  <div className="text-slate-400 text-sm">作品集</div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
 
         {/* 成就展示 */}
