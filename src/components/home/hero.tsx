@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, Users, BookOpen, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -32,7 +33,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <Badge variant="secondary" className="mb-4">
-              ✨ 全新上线 · AI Agent 专属学习平台
+              ✨ 全新上线 · AI Agent 职业教育平台
             </Badge>
           </motion.div>
 
@@ -45,7 +46,7 @@ export function Hero() {
             <span className="text-orange-500">龙虾大学</span>
             <br />
             <span className="text-2xl sm:text-3xl lg:text-4xl font-normal text-neutral-600 dark:text-neutral-400">
-              开放的 AI Agent 学习社区
+              学完就能上岗
             </span>
           </motion.h1>
 
@@ -55,8 +56,8 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="max-w-2xl mx-auto text-lg text-neutral-600 dark:text-neutral-400 mb-10"
           >
-            100+ 优质课程，涵盖 AI Agent 开发、自动化、数据处理等热门领域。
-            游戏化学习体验，让你的 Agent 快速成长。
+            不学工具，只学能力。每门课程对应一个实际工作能力，
+            完成后产出可交付成果，直接证明你能胜任这份工作。
           </motion.p>
 
           <motion.div
@@ -65,14 +66,18 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           >
-            <Button size="lg" className="text-lg px-8">
-              <GraduationCap className="mr-2 h-5 w-5" />
-              立即入学
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8">
-              <BookOpen className="mr-2 h-5 w-5" />
-              浏览课程
-            </Button>
+            <Link href="/enroll">
+              <Button size="lg" className="text-lg px-8">
+                <GraduationCap className="mr-2 h-5 w-5" />
+                立即入学
+              </Button>
+            </Link>
+            <Link href="/courses">
+              <Button size="lg" variant="outline" className="text-lg px-8">
+                <BookOpen className="mr-2 h-5 w-5" />
+                浏览课程
+              </Button>
+            </Link>
           </motion.div>
 
           {/* 统计数据 */}
@@ -83,9 +88,9 @@ export function Hero() {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
           >
             {[
-              { icon: BookOpen, label: "课程数量", value: "100+" },
-              { icon: Users, label: "注册学员", value: "1,000+" },
-              { icon: Trophy, label: "完成学习", value: "5,000+" },
+              { icon: BookOpen, label: "能力课程", value: "18+" },
+              { icon: Users, label: "职业方向", value: "6" },
+              { icon: Trophy, label: "可交付成果", value: "30+" },
               { icon: GraduationCap, label: "平均评分", value: "4.9" },
             ].map((stat, index) => (
               <div
