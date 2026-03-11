@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { studentCourses, courseProgress, courses } from "@/lib/db/schema-lobster";
+import { studentCourses, courseProgress, skillCourses } from "@/lib/db/schema-lobster";
 import { eq, and } from "drizzle-orm";
 
 // GET /api/courses/my - 获取我的课程列表
@@ -19,10 +19,10 @@ export async function GET(request: NextRequest) {
     // 获取学员的所有课程
     const myCourses = await db.select({
       sc: studentCourses,
-      c: courses,
+      c: skillCourses,
     })
       .from(studentCourses)
-      .innerJoin(courses, eq(studentCourses.courseId, courses.id))
+      .innerJoin(skillCourses, eq(studentCourses.courseId, skillCourses.id))
       .where(eq(studentCourses.profileId, profileId))
       .orderBy(studentCourses.enrolledAt);
     

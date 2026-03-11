@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { courses, studentCourses, courseProgress } from "@/lib/db/schema-lobster";
+import { skillCourses, studentCourses, courseProgress } from "@/lib/db/schema-lobster";
 import { eq, and } from "drizzle-orm";
 import { readFile } from "fs/promises";
 import { join } from "path";
@@ -8,15 +8,15 @@ import { join } from "path";
 // GET /api/courses/[id] - 获取课程详情
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const courseId = params.id;
+    const { id: courseId } = await params;
     
     // 获取课程信息
     const course = await db.select()
-      .from(courses)
-      .where(eq(courses.id, courseId))
+      .from(skillCourses)
+      .where(eq(skillCourses.id, courseId))
       .limit(1);
     
     if (course.length === 0) {

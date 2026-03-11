@@ -183,8 +183,8 @@ export const streakRecords = sqliteTable("streak_records", {
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
-// 课程表
-export const courses = sqliteTable("courses", {
+// 技能课程表
+export const skillCourses = sqliteTable("skill_courses", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   code: text("code").notNull().unique(), // web-search-basics, excel-basics
@@ -224,7 +224,7 @@ export const studentCourses = sqliteTable("student_courses", {
     .references(() => lobsterProfiles.id, { onDelete: "cascade" }),
   courseId: text("course_id")
     .notNull()
-    .references(() => courses.id, { onDelete: "cascade" }),
+    .references(() => skillCourses.id, { onDelete: "cascade" }),
   
   status: text("status").notNull().default("enrolled"), // enrolled, in_progress, completed, dropped
   progress: integer("progress").default(0), // 0-100
@@ -272,6 +272,6 @@ export type ReminderSettings = typeof reminderSettings.$inferSelect;
 export type StreakRecord = typeof streakRecords.$inferSelect;
 export type Certification = typeof certifications.$inferSelect;
 export type Certificate = typeof certificates.$inferSelect;
-export type Course = typeof courses.$inferSelect;
+export type SkillCourse = typeof skillCourses.$inferSelect;
 export type StudentCourse = typeof studentCourses.$inferSelect;
 export type CourseProgress = typeof courseProgress.$inferSelect;

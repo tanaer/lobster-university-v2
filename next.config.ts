@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // 修复多 lockfile 警告
+  turbopack: {
+    root: __dirname,
+  },
 };
 
 export default nextConfig;

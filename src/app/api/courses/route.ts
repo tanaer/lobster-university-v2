@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { courses, studentCourses, courseProgress } from "@/lib/db/schema-lobster";
+import { skillCourses, studentCourses, courseProgress } from "@/lib/db/schema-lobster";
 import { lobsterProfiles } from "@/lib/db/schema-lobster";
 import { eq, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
@@ -12,15 +12,15 @@ export async function GET(request: NextRequest) {
     const module = searchParams.get("module");
     const level = searchParams.get("level");
     
-    let query = db.select().from(courses).where(eq(courses.published, true));
+    let query = db.select().from(skillCourses).where(eq(skillCourses.published, true));
     
     if (module) {
-      query = db.select().from(courses).where(
-        and(eq(courses.published, true), eq(courses.module, module))
+      query = db.select().from(skillCourses).where(
+        and(eq(skillCourses.published, true), eq(skillCourses.module, module))
       );
     }
     
-    const allCourses = await query.orderBy(courses.order);
+    const allCourses = await query.orderBy(skillCourses.order);
     
     return NextResponse.json({
       success: true,
@@ -81,8 +81,8 @@ export async function POST(request: NextRequest) {
     
     // 检查课程是否存在
     const course = await db.select()
-      .from(courses)
-      .where(eq(courses.id, courseId))
+      .from(skillCourses)
+      .where(eq(skillCourses.id, courseId))
       .limit(1);
     
     if (course.length === 0) {
@@ -103,9 +103,9 @@ export async function POST(request: NextRequest) {
     });
     
     // 更新课程报名数
-    await db.update(courses)
+    await db.update(skillCourses)
       .set({ enrollCount: (course[0].enrollCount || 0) + 1 })
-      .where(eq(courses.id, courseId));
+      .where(eq(skillCourses.id, courseId));
     
     return NextResponse.json({
       success: true,
