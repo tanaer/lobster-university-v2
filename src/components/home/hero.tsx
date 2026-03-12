@@ -159,7 +159,7 @@ export function Hero() {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-16"
           >
             {[
-              { icon: BookOpen, label: "能力课程", value: "18+" },
+              { icon: BookOpen, label: "能力课程", value: "67+" },
               { icon: Users, label: "职业方向", value: "6" },
               { icon: Trophy, label: "可交付成果", value: "30+" },
               { icon: GraduationCap, label: "平均评分", value: "4.9" },

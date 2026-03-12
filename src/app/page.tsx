@@ -94,7 +94,7 @@ export default function Home() {
           <div className="text-center mt-8">
             <Link href="/courses">
               <Button size="lg" variant="outline">
-                查看全部 18 门课程 →
+                查看全部 67 门课程 →
               </Button>
             </Link>
           </div>
