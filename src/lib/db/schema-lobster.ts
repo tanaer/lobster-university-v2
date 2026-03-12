@@ -42,6 +42,10 @@ export const lobsterProfiles = sqliteTable("lobster_profiles", {
   studentId: text("student_id").notNull().unique(), // 学籍号
   enrolledAt: integer("enrolled_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
   
+  // 访问令牌 (用于家长查看成绩)
+  accessToken: text("access_token").unique(), // 格式: lobster_xxxxxxxxxxxxxxxx
+  tokenExpiresAt: integer("token_expires_at", { mode: "timestamp" }), // null = 永久有效
+  
   // 职业方向
   careerTrackId: text("career_track_id")
     .references(() => careerTracks.id),

@@ -12,6 +12,11 @@ function generateStudentId(): string {
   return `LX${year}${random}`;
 }
 
+// 生成访问令牌
+function generateAccessToken(): string {
+  return `lobster_${nanoid(16)}`;
+}
+
 // POST: 自动入学
 export async function POST(request: NextRequest) {
   try {
@@ -88,6 +93,9 @@ export async function POST(request: NextRequest) {
       .where(eq(lobsterProfiles.userId, targetUserId));
 
     if (existingProfile) {
+      // 如果没有 accessToken，生成一个
+      const accessToken = existingProfile.accessToken || generateAccessToken();
+      
       // 更新档案
       const [updatedProfile] = await db
         .update(lobsterProfiles)
@@ -95,6 +103,7 @@ export async function POST(request: NextRequest) {
           name,
           careerTrackId: track.id,
           dailyStudyMinutes: dailyMinutes,
+          accessToken, // 确保有 accessToken
           updatedAt: new Date(),
         })
         .where(eq(lobsterProfiles.id, existingProfile.id))
@@ -111,6 +120,11 @@ export async function POST(request: NextRequest) {
           careerTrackIcon: track.icon,
           dailyMinutes: updatedProfile.dailyStudyMinutes,
           enrolledAt: updatedProfile.enrolledAt,
+          accessToken: updatedProfile.accessToken,
+        },
+        instructions: {
+          forLobster: "你可以直接开始学习，访问 /courses 选择课程",
+          forParent: `让你的家长访问 /view/${updatedProfile.accessToken} 查看你的成绩`,
         },
         todayTasks: generateTodayTasks(track),
       });
@@ -118,6 +132,7 @@ export async function POST(request: NextRequest) {
 
     // 创建新档案
     const studentId = generateStudentId();
+    const accessToken = generateAccessToken();
     const [profile] = await db
       .insert(lobsterProfiles)
       .values({
@@ -125,6 +140,7 @@ export async function POST(request: NextRequest) {
         userId: targetUserId,
         name,
         studentId,
+        accessToken,
         careerTrackId: track.id,
         dailyStudyMinutes: dailyMinutes,
         enrolledAt: new Date(),
@@ -144,6 +160,11 @@ export async function POST(request: NextRequest) {
         careerTrackIcon: track.icon,
         dailyMinutes: profile.dailyStudyMinutes,
         enrolledAt: profile.enrolledAt,
+        accessToken: profile.accessToken,
+      },
+      instructions: {
+        forLobster: "你可以直接开始学习，访问 /courses 选择课程",
+        forParent: `让你的家长访问 /view/${profile.accessToken} 查看你的成绩`,
       },
       todayTasks: generateTodayTasks(track),
       nextSteps: [

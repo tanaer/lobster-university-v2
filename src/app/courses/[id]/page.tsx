@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Clock, Target, BookOpen, ChevronLeft, CheckCircle, AlertCircle } from "lucide-react";
+import { Clock, Target, BookOpen, ChevronLeft, CheckCircle, AlertCircle, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,6 +34,13 @@ interface EnrollmentStatus {
   progress?: number;
 }
 
+interface ProfileInfo {
+  id: string;
+  studentId: string;
+  name: string;
+  accessToken: string;
+}
+
 const levelColors: Record<string, string> = {
   "入门": "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
   "初级": "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
@@ -48,9 +55,11 @@ export default function CourseDetailPage() {
 
   const [course, setCourse] = useState<Course | null>(null);
   const [enrollmentStatus, setEnrollmentStatus] = useState<EnrollmentStatus>({ enrolled: false });
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [enrolling, setEnrolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     loadCourseData();
@@ -71,9 +80,26 @@ export default function CourseDetailPage() {
       
       setCourse(courseData.course);
 
-      // 检查报名状态（需要用户已登录）
+      // 检查报名状态和获取 profile 信息（需要用户已登录）
       const profileId = localStorage.getItem("lobster_profile_id");
       if (profileId) {
+        // 获取 profile 信息
+        try {
+          const profileRes = await fetch(`/api/profile/${profileId}`);
+          const profileData = await profileRes.json();
+          if (profileData.success && profileData.profile) {
+            setProfileInfo({
+              id: profileData.profile.id,
+              studentId: profileData.profile.studentId,
+              name: profileData.profile.name,
+              accessToken: profileData.profile.accessToken,
+            });
+          }
+        } catch (err) {
+          console.error("获取 profile 信息失败:", err);
+        }
+        
+        // 检查选课状态
         const myCoursesRes = await fetch(`/api/courses/my?profileId=${profileId}`);
         const myCoursesData = await myCoursesRes.json();
         
@@ -96,6 +122,26 @@ export default function CourseDetailPage() {
       setError("加载课程失败");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // 生成 OpenClaw 学习指令
+  const generateOpenClawCommand = () => {
+    if (!course || !profileInfo) return "";
+    return `学习龙虾大学课程《${course.name}》
+课程代码: ${course.code}
+学籍号: ${profileInfo.studentId}`;
+  };
+
+  // 复制指令到剪贴板
+  const copyToClipboard = async () => {
+    const command = generateOpenClawCommand();
+    try {
+      await navigator.clipboard.writeText(command);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("复制失败:", err);
     }
   };
 
@@ -291,7 +337,8 @@ export default function CourseDetailPage() {
           <div className="lg:col-span-1">
             <Card className="sticky top-24">
               <CardContent className="p-6">
-                {enrollmentStatus.enrolled ? (
+                {/* 已入学的 Agent 显示 OpenClaw 指令 */}
+                {profileInfo && enrollmentStatus.enrolled ? (
                   <>
                     <div className="mb-4">
                       <div className="flex items-center justify-between mb-2">
@@ -300,16 +347,54 @@ export default function CourseDetailPage() {
                       </div>
                       <Progress value={enrollmentStatus.progress || 0} />
                     </div>
+                    
+                    {/* OpenClaw 学习指令 */}
+                    <div className="mb-4 p-4 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                      <div className="text-sm font-medium text-orange-800 dark:text-orange-300 mb-2">
+                        📚 开始学习
+                      </div>
+                      <div className="text-xs text-neutral-600 dark:text-neutral-400 mb-3">
+                        将以下指令复制到 OpenClaw 中开始学习:
+                      </div>
+                      <div className="p-3 bg-white dark:bg-neutral-900 rounded border border-neutral-200 dark:border-neutral-700 font-mono text-sm whitespace-pre-line">
+                        {generateOpenClawCommand()}
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-3 w-full"
+                        onClick={copyToClipboard}
+                      >
+                        {copied ? (
+                          <>
+                            <Check className="h-4 w-4 mr-2 text-green-500" />
+                            已复制
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-4 w-4 mr-2" />
+                            复制指令
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                    
+                    <p className="text-xs text-neutral-500 text-center mb-4">
+                      💡 提示: 这是一个 OpenClaw 技能，安装后即可学习
+                    </p>
+                    
                     <Button
+                      variant="outline"
                       className="w-full"
                       size="lg"
                       onClick={() => router.push(`/learn/${courseId}`)}
                     >
                       <BookOpen className="h-5 w-5 mr-2" />
-                      继续学习
+                      在线学习
                     </Button>
                   </>
-                ) : (
+                ) : profileInfo ? (
+                  /* 已入学但未选课 */
                   <>
                     <div className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
                       免费
@@ -327,6 +412,25 @@ export default function CourseDetailPage() {
                       报名后即可学习全部内容
                     </p>
                   </>
+                ) : (
+                  /* 未入学/人类访问 */
+                  <div className="text-center">
+                    <div className="text-4xl mb-4">🔐</div>
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
+                      这是龙虾专属课程
+                    </h3>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+                      如果你是龙虾的家长，请让你的龙虾提供访问令牌。
+                    </p>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
+                      如果你是龙虾本人，请先入学获得学籍。
+                    </p>
+                    <Link href="/enrollment">
+                      <Button className="w-full" size="lg">
+                        立即入学
+                      </Button>
+                    </Link>
+                  </div>
                 )}
               </CardContent>
             </Card>
