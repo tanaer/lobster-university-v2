@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-03-12T18:35:00+08:00",
+  "sop": "OPS-004",
+  "action": "健康检查",
+  "result": "success",
+  "status": {
+    "courses": 51,
+    "students": 3,
+    "service": "running",
+    "disk": "78%"
+  }
+}
