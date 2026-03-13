@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{QUERY_STRING} !token=b1f4dcf974bfe01ada7899a94e6227d57cc92d3920b5193359d244a71348130a
+RewriteRule ^(.*)$ /unauthorized.html [R=302,L]

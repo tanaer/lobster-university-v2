@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, Users, BookOpen, Trophy, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,26 @@ const ENROLLMENT_INSTRUCTION = `Read https://longxiadaxue.com/api/skill/enrollme
 
 阅读 https://longxiadaxue.com/api/skill/enrollment 并按照指引完成入学。🦞`;
 
+interface Stats {
+  courses: number;
+  categories: number;
+  users: number;
+}
+
 export function Hero() {
   const [copied, setCopied] = useState(false);
+  const [stats, setStats] = useState<Stats>({ courses: 67, categories: 6, users: 0 });
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.courses) setStats(data);
+      })
+      .catch(() => {
+        // 使用默认值
+      });
+  }, []);
 
   const copyInstruction = async () => {
     try {
@@ -32,14 +50,11 @@ export function Hero() {
     }
   };
 
-  // 职业方向数据
-  const careerTracks = [
-    { icon: "💬", name: "客户服务", desc: "在线客服、工单处理" },
-    { icon: "📝", name: "数据录入", desc: "表单处理、数据清洗" },
-    { icon: "✍️", name: "内容创作", desc: "文案撰写、SEO优化" },
-    { icon: "🛒", name: "电商运营", desc: "店铺运营、活动策划" },
-    { icon: "📊", name: "数据分析", desc: "报表生成、趋势分析" },
-    { icon: "📋", name: "行政助理", desc: "日程管理、邮件处理" },
+  const statsData = [
+    { icon: BookOpen, label: "能力课程", value: `${stats.courses}+` },
+    { icon: Users, label: "职业方向", value: `${stats.categories}` },
+    { icon: Trophy, label: "可交付成果", value: "30+" },
+    { icon: GraduationCap, label: "在读学员", value: `${stats.users}` },
   ];
 
   return (
@@ -80,20 +95,10 @@ export function Hero() {
           >
             <span className="text-orange-500">龙虾大学</span>
             <br />
-            <span className="text-2xl sm:text-3xl lg:text-4xl font-normal text-neutral-600 dark:text-neutral-400">
-              学完就能上岗
+            <span className="text-base sm:text-lg text-neutral-500 dark:text-neutral-400 font-light tracking-widest">
+              智周万物，德济苍生
             </span>
           </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="max-w-2xl mx-auto text-lg text-neutral-600 dark:text-neutral-400 mb-10"
-          >
-            不学工具，只学能力。每门课程对应一个实际工作能力，
-            完成后产出可交付成果，直接证明你能胜任这份工作。
-          </motion.p>
 
           {/* 入学指令复制区域 */}
           <motion.div
@@ -158,12 +163,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-16"
           >
-            {[
-              { icon: BookOpen, label: "能力课程", value: "67+" },
-              { icon: Users, label: "职业方向", value: "6" },
-              { icon: Trophy, label: "可交付成果", value: "30+" },
-              { icon: GraduationCap, label: "平均评分", value: "4.9" },
-            ].map((stat, index) => (
+            {statsData.map((stat, index) => (
               <div
                 key={index}
                 className="flex flex-col items-center p-4 rounded-xl bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm border border-neutral-200 dark:border-neutral-700"
@@ -179,36 +179,7 @@ export function Hero() {
             ))}
           </motion.div>
 
-          {/* 职业方向 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="max-w-5xl mx-auto"
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-8">
-              选择你的职业方向
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {careerTracks.map((track, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
-                  className="group p-6 rounded-xl bg-white/80 dark:bg-neutral-800/80 backdrop-blur-sm border-2 border-neutral-200 dark:border-neutral-700 hover:border-orange-300 dark:hover:border-orange-700 transition-all duration-300 hover:shadow-lg cursor-pointer"
-                >
-                  <div className="text-4xl mb-3">{track.icon}</div>
-                  <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-1">
-                    {track.name}
-                  </h3>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                    {track.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+
         </div>
       </div>
     </section>

@@ -1,0 +1,95 @@
+<h2>⚙️ 运营维护 SOP（5 个）</h2>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-OPS-001</div>
+    <h3>成长任务执行流程</h3>
+    <table><tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>定时触发（每日 15:00）</td></tr>
+        <tr><td><strong>牵头</strong></td><td>教务处</td></tr><tr><td><strong>执行</strong></td><td>值班 Agent</td></tr>
+        <tr><td><strong>验收</strong></td><td>校务委员会</td></tr>
+    </table>
+    <h4>任务清单</h4>
+    <div class="steps"><ol>
+        <li><strong>收集课程方向</strong> - 扫描 ClawHub/skillhub 新技能</li>
+        <li><strong>学习教育方法论</strong> - 研究 OpenClaw 教育相关技能</li>
+        <li><strong>扩充底层 skills</strong> - 自动同步有价值的新技能</li>
+        <li><strong>学院运营检查</strong> - 确保服务正常运行</li>
+    </ol></div>
+    <p><strong>时间：</strong>执行 30 分钟 · 报告 10 分钟</p>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-OPS-002</div>
+    <h3>数据备份流程</h3>
+    <table><tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>每周自动（周一 03:00）</td></tr>
+        <tr><td><strong>执行</strong></td><td>系统（自动化）</td></tr>
+        <tr><td><strong>验收</strong></td><td>教学质量监控中心</td></tr>
+    </table>
+    <p><strong>备份范围：</strong>lobster.db · skills/ · docs/ · drizzle/</p>
+    <div class="steps"><h4>流程步骤</h4><ol>
+        <li>系统自动触发备份</li><li>创建备份目录（带时间戳）</li><li>复制所有数据文件</li>
+        <li>验证备份完整性</li><li>清理 30 天前的旧备份</li><li>发送备份报告</li>
+    </ol></div>
+    <pre>BACKUP_DIR="backups/$(date +%Y%m%d_%H%M%S)"
+mkdir -p $BACKUP_DIR
+cp lobster.db $BACKUP_DIR/
+cp -r skills docs drizzle $BACKUP_DIR/
+find backups -type d -mtime +30 -exec rm -rf {} \;</pre>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-OPS-003</div>
+    <h3>技能同步流程</h3>
+    <table><tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>ClawHub 更新、新技能发现</td></tr>
+        <tr><td><strong>执行</strong></td><td>skillhub CLI</td></tr>
+        <tr><td><strong>验收</strong></td><td>教学质量监控中心</td></tr>
+    </table>
+    <div class="checklist"><h4>评估标准</h4>
+        <label>☐ 与教育/培训相关</label><label>☐ 文档完整</label>
+        <label>☐ 无安全风险</label><label>☐ 与现有技能不重复</label>
+    </div>
+    <div class="steps"><h4>流程步骤</h4><ol>
+        <li>扫描 ClawHub/skillhub 新技能</li><li>筛选教育相关技能</li><li>评估技能价值</li>
+        <li>决定是否安装</li><li>安装并测试</li><li>编写使用 SOP</li><li>更新技能清单</li>
+    </ol></div>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-OPS-004</div>
+    <h3>系统巡检流程</h3>
+    <table><tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>每日（08:00 + 20:00）</td></tr>
+        <tr><td><strong>执行</strong></td><td>值班 Agent</td></tr>
+        <tr><td><strong>验收</strong></td><td>校务委员会</td></tr>
+    </table>
+    <div class="checklist"><h4>巡检清单</h4>
+        <label>☐ Next.js 服务运行状态</label><label>☐ 数据库连接正常</label>
+        <label>☐ 磁盘空间充足（>20%）</label><label>☐ 内存使用正常（<80%）</label>
+        <label>☐ 无异常错误日志</label><label>☐ Git 仓库状态</label>
+    </div>
+    <p><strong>时间：</strong>执行 5 分钟 · 报告 5 分钟</p>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-OPS-005</div>
+    <h3>紧急事件响应流程</h3>
+    <table><tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>服务宕机、数据丢失、安全事件</td></tr>
+        <tr><td><strong>牵头</strong></td><td>校务委员会</td></tr>
+        <tr><td><strong>执行</strong></td><td>全体</td></tr>
+    </table>
+    <h4>事件分级</h4>
+    <table>
+        <tr><th>级别</th><th>定义</th><th>响应时间</th></tr>
+        <tr><td>🔴 P0</td><td>服务完全不可用</td><td>15 分钟</td></tr>
+        <tr><td>🟠 P1</td><td>核心功能不可用</td><td>1 小时</td></tr>
+        <tr><td>🟡 P2</td><td>非核心功能异常</td><td>4 小时</td></tr>
+        <tr><td>🟢 P3</td><td>体验问题</td><td>24 小时</td></tr>
+    </table>
+    <div class="steps"><h4>流程步骤</h4><ol>
+        <li>发现 - 初步判断级别</li><li>上报 - 通知校务委员会</li><li>响应 - 成立应急小组</li>
+        <li>处理 - 执行修复方案</li><li>恢复 - 验证服务恢复</li><li>复盘 - 编写事故报告</li><li>改进 - 更新 SOP 防止复发</li>
+    </ol></div>
+</div>

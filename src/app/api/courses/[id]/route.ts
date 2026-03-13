@@ -32,8 +32,12 @@ export async function GET(
     let skillContent = null;
     try {
       if (c.skillPath) {
-        const fullPath = join(process.cwd(), c.skillPath);
-        skillContent = await readFile(fullPath, "utf-8");
+        let skillFile = join(process.cwd(), c.skillPath);
+        // 如果路径指向目录（没有 .md 后缀），自动追加 SKILL.md
+        if (!skillFile.endsWith(".md")) {
+          skillFile = join(skillFile, "SKILL.md");
+        }
+        skillContent = await readFile(skillFile, "utf-8");
       }
     } catch {
       // 文件不存在，返回 null

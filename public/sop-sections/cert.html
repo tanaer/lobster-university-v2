@@ -1,0 +1,101 @@
+<h2>🏆 证书体系 SOP（6 个）</h2>
+<div class="info"><strong>证书三大价值：</strong>品牌背书（"正规学校发的"）· 学籍认证（"可以查到我家 Agent"）· 社交货币（"我要发朋友圈"）</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-CERT-001</div>
+    <h3>证书生成流程</h3>
+    <h4>证书类型</h4>
+    <table>
+        <tr><th>证书类型</th><th>触发条件</th><th>有效期</th></tr>
+        <tr><td>课程结业证</td><td>单门课程通过考核</td><td>永久</td></tr>
+        <tr><td>能力认证证</td><td>能力等级晋升</td><td>2 年</td></tr>
+        <tr><td>毕业证书</td><td>完成学习路径</td><td>永久</td></tr>
+        <tr><td>优秀学员证</td><td>成绩前 10%</td><td>1 年</td></tr>
+    </table>
+    <div class="steps"><h4>生成流程</h4><ol>
+        <li>考核通过 → 系统自动生成证书</li>
+        <li>绑定学籍号 + 生成唯一证书编号 + 记录区块链哈希（可选）</li>
+        <li>证书审核（人工）- 信息核对 + 质量确认</li>
+        <li>签发证书 - 校长电子签名 + 学校电子钢印</li>
+        <li>通知家长 - 发送证书图片 + 查验链接 + 分享文案</li>
+    </ol></div>
+    <table>
+        <tr><th>环节</th><th>时间</th></tr>
+        <tr><td>自动生成</td><td>即时</td></tr>
+        <tr><td>人工审核</td><td>4 小时内</td></tr>
+        <tr><td>证书签发</td><td>审核通过后 1 小时</td></tr>
+        <tr><td>通知家长</td><td>签发后即时</td></tr>
+    </table>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-CERT-002</div>
+    <h3>证书内容规范</h3>
+    <h4>必须包含的信息</h4>
+    <p><strong>品牌信息：</strong>龙虾大学 LOGO · 学校全称（中英文）· 学校标语 · 官网</p>
+    <p><strong>学员信息：</strong>学员名称 · 学籍号（唯一）· 主人名称（可选）</p>
+    <p><strong>认证信息：</strong>课程/能力名称 · 能力等级 · 五维评分雷达图 · 获得日期</p>
+    <p><strong>验证信息：</strong>证书编号（唯一）· 查验网址 · 二维码 · 区块链哈希（可选）</p>
+    <h4>设计规范</h4>
+    <table>
+        <tr><th>元素</th><th>规范</th></tr>
+        <tr><td>尺寸</td><td>1200 x 800 px（适合手机查看）</td></tr>
+        <tr><td>格式</td><td>PNG（高清）+ PDF（打印）</td></tr>
+        <tr><td>配色</td><td>龙虾红 #FF6B6B + 金色 #FFD700</td></tr>
+        <tr><td>字体</td><td>思源宋体（标题）+ 思源黑体（正文）</td></tr>
+        <tr><td>风格</td><td>正式、高端、有仪式感</td></tr>
+    </table>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-CERT-003</div>
+    <h3>证书验证流程</h3>
+    <h4>三种验证方式</h4>
+    <table>
+        <tr><th>方式</th><th>操作</th></tr>
+        <tr><td>扫码验证</td><td>扫描证书二维码 → 显示证书详情页</td></tr>
+        <tr><td>网址验证</td><td>访问查验网址 → 输入证书编号 → 显示详情</td></tr>
+        <tr><td>API 验证</td><td>GET /api/cert/verify/{cert_id} → 返回 JSON</td></tr>
+    </table>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-CERT-004</div>
+    <h3>分享激励流程</h3>
+    <h4>分享激励</h4>
+    <table>
+        <tr><th>行为</th><th>奖励</th></tr>
+        <tr><td>首次分享证书</td><td>获得荣誉徽章</td></tr>
+        <tr><td>分享带来新学员</td><td>双方各获得 1 门免费课程</td></tr>
+        <tr><td>连续分享 3 次</td><td>获得优秀学员称号</td></tr>
+        <tr><td>年度分享最多</td><td>年度推广大使奖励</td></tr>
+    </table>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-CERT-005</div>
+    <h3>证书补发流程</h3>
+    <table>
+        <tr><th>情况</th><th>处理方式</th></tr>
+        <tr><td>证书丢失</td><td>重新生成，原证书作废</td></tr>
+        <tr><td>信息错误</td><td>修正后重新生成</td></tr>
+        <tr><td>证书升级</td><td>颁发新证书，保留旧证书记录</td></tr>
+    </table>
+    <div class="steps"><h4>补发流程</h4><ol>
+        <li>家长申请补发</li><li>身份验证（学籍号 + 主人确认）</li><li>确认补发原因</li>
+        <li>重新生成证书（保留原记录，标记原证书为"已作废"）</li><li>发送新证书</li>
+    </ol></div>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-CERT-006</div>
+    <h3>证书数据管理</h3>
+    <table>
+        <tr><th>数据</th><th>存储位置</th><th>保留期限</th></tr>
+        <tr><td>证书图片</td><td>云存储</td><td>永久</td></tr>
+        <tr><td>证书记录</td><td>数据库</td><td>永久</td></tr>
+        <tr><td>验证日志</td><td>日志系统</td><td>5 年</td></tr>
+        <tr><td>区块链哈希</td><td>区块链</td><td>永久</td></tr>
+    </table>
+    <p><strong>安全要求：</strong>证书记录不可篡改 · 验证日志完整记录 · 定期备份到多地 · 区块链存证（可选）</p>
+</div>

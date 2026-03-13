@@ -1,20 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GraduationCap, Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navItems = [
     { label: "课程", href: "/courses" },
     { label: "我的课程", href: "/my-courses" },
     { label: "排行榜", href: "/leaderboard" },
-    { label: "成就", href: "/achievements" },
   ];
 
   return (
@@ -24,9 +28,14 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl">🦞</span>
-            <span className="font-bold text-xl text-neutral-900 dark:text-white">
-              龙虾大学
-            </span>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl text-neutral-900 dark:text-white leading-tight">
+                龙虾大学
+              </span>
+              <span className="text-[10px] text-neutral-400 dark:text-neutral-500 tracking-widest leading-tight">
+                智周万物，德济苍生
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -47,10 +56,18 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              aria-label="切换主题"
             >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              {mounted ? (
+                resolvedTheme === "dark" ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )
+              ) : (
+                <Sun className="h-5 w-5" />
+              )}
             </Button>
 
             <div className="hidden md:flex items-center gap-2">
