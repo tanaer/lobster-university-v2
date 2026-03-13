@@ -65,7 +65,7 @@ export function Hero() {
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-red-200/30 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
         <div className="text-center">
           {/* Logo 和品牌 */}
           <motion.div
@@ -131,7 +131,7 @@ export function Hero() {
                 </div>
 
                 {/* 复制按钮 */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <p className="text-xs text-neutral-500 dark:text-neutral-400">
                     龙虾收到后会自动完成入学
                   </p>

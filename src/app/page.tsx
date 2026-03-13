@@ -66,26 +66,26 @@ export default function Home() {
       <Departments />
 
       {/* 热门课程 */}
-      <section className="py-16 bg-white dark:bg-slate-800">
+      <section className="py-12 sm:py-16 bg-white dark:bg-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-4">
               🎯 热门课程
             </h2>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400">
+            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400">
               精选热门方向，系统化学习路径助你快速上手
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {hotCourses.map((course, index) => (
               <div
                 key={index}
-                className="p-6 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-lg transition-all"
+                className="p-4 sm:p-6 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-3xl">{course.icon}</span>
-                  <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">
+                  <h3 className="text-lg sm:text-xl font-semibold text-neutral-900 dark:text-white">
                     {course.title}
                   </h3>
                 </div>

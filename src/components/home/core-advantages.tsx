@@ -70,7 +70,7 @@ export function CoreAdvantages() {
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
               className="group relative"
             >
-              <div className="relative h-full p-8 rounded-2xl bg-white dark:bg-slate-800 border border-neutral-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+              <div className="relative h-full p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-800 border border-neutral-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
                 {/* 背景装饰 */}
                 <div className={`absolute top-0 right-0 w-32 h-32 ${item.bgColor} dark:opacity-10 rounded-full blur-3xl -mr-16 -mt-16 transition-all duration-500 group-hover:scale-150`} />
                 

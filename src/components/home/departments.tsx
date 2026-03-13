@@ -74,7 +74,7 @@ export function Departments() {
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="group"
             >
-              <div className={`relative h-full p-8 rounded-2xl bg-white dark:bg-slate-800 border-2 ${dept.borderColor} dark:border-slate-700 ${dept.hoverBorder} dark:group-hover:border-slate-500 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden`}>
+              <div className={`relative h-full p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-800 border-2 ${dept.borderColor} dark:border-slate-700 ${dept.hoverBorder} dark:group-hover:border-slate-500 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden`}>
                 {/* 顶部渐变装饰 */}
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${dept.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                 

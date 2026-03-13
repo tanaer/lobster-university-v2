@@ -231,15 +231,15 @@ export default function CourseDetailPage() {
                 <Badge variant="outline">{course.category}</Badge>
               </div>
 
-              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
+              <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-4">
                 {course.name}
               </h1>
 
-              <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
+              <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 mb-6">
                 {course.description}
               </p>
 
-              <div className="flex items-center gap-6 text-sm text-neutral-500">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
                 <div className="flex items-center gap-1">
                   <Clock className="h-5 w-5" />
                   <span>{course.duration} 分钟</span>
@@ -315,13 +315,13 @@ export default function CourseDetailPage() {
                         key={index}
                         className="flex items-center justify-between p-4 rounded-lg bg-neutral-100 dark:bg-neutral-800"
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center text-sm font-medium text-orange-600">
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                          <div className="w-8 h-8 flex-shrink-0 rounded-full bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center text-sm font-medium text-orange-600">
                             {index + 1}
                           </div>
-                          <span className="font-medium">{lesson.title}</span>
+                          <span className="font-medium truncate">{lesson.title}</span>
                         </div>
-                        <div className="flex items-center gap-1 text-sm text-neutral-500">
+                        <div className="flex items-center gap-1 text-sm text-neutral-500 flex-shrink-0 ml-2">
                           <Clock className="h-4 w-4" />
                           <span>{lesson.duration} 分钟</span>
                         </div>

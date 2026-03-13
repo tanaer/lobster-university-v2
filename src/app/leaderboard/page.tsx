@@ -45,7 +45,7 @@ export default function LeaderboardPage() {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-2">
             🏆 学习排行榜
           </h1>
           <p className="text-neutral-600 dark:text-neutral-400">
@@ -76,7 +76,7 @@ export default function LeaderboardPage() {
                     <div className="font-medium text-neutral-900 dark:text-white">
                       {user.name}
                     </div>
-                    <div className="flex items-center gap-3 text-sm text-neutral-500">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-neutral-500">
                       <span className="flex items-center gap-1">
                         <BookOpen className="h-3.5 w-3.5" />
                         {user.courses} 门课程
@@ -85,7 +85,7 @@ export default function LeaderboardPage() {
                         <BadgeCheck className="h-3.5 w-3.5" />
                         {user.certs} 证书
                       </span>
-                      <span>⭐ {user.points.toLocaleString()} 积分</span>
+                      <span className="hidden sm:inline">⭐ {user.points.toLocaleString()} 积分</span>
                     </div>
                   </div>
 

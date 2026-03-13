@@ -39,15 +39,15 @@ export default function DashboardPage() {
   const todayProgress = (data.todayStudied / data.dailyGoal) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 py-8 sm:py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* 头部信息 */}
         <div className="mb-8 text-center">
-          <div className="text-6xl mb-4">🦞</div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <div className="text-5xl sm:text-6xl mb-4">🦞</div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             {data.lobsterName}
           </h1>
-          <div className="flex items-center justify-center gap-4 text-slate-400">
+          <div className="flex flex-wrap items-center justify-center gap-3 text-slate-400">
             <Badge variant="outline" className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30">
               {data.careerTrack}
             </Badge>
