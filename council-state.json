@@ -2,19 +2,19 @@
   "departments": {
     "校务委员会": {
       "status": "normal",
-      "message": "8条职业路径 | 235门课程 | 19个SOP文件",
+      "message": "8条职业路径 | 235门课程 | 20个SOP文件",
       "icon": "👑",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
         "管理8条职业路径",
-        "监督19个SOP执行",
+        "监督20个SOP执行",
         "季度战略规划"
       ],
       "active_work": "监督全校运营：235门课程，0名学员",
       "achievements": [
         "职业路径8条",
-        "SOP文件19个",
+        "SOP文件20个",
         "课程235门"
       ],
       "sops": [
@@ -67,7 +67,7 @@
       "message": "质量验收通过 ✅",
       "icon": "🔍",
       "sop_count": 6,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
         "监控235门课程质量",
         "course-qa.sh 自动验收",
@@ -167,17 +167,17 @@
       "message": "235门课程 | 30个分类 | 基础课包16门",
       "icon": "📚",
       "sop_count": 4,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
-        "JD扫描提案：41条待研判",
+        "JD扫描提案：60条待研判",
         "基础课包维护：16门",
         "每30分钟扫描BOSS/X/小红书"
       ],
-      "active_work": "管理235门课程 | JD提案41条 | 基础课包16门",
+      "active_work": "管理235门课程 | JD提案60条 | 基础课包16门",
       "achievements": [
         "课程总数235门",
         "基础课包16门",
-        "JD提案41条"
+        "JD提案60条"
       ],
       "sops": [
         {
@@ -228,7 +228,7 @@
       "message": "学员0名 | 在读0名 | 邀请码0个(已用0)",
       "icon": "🎓",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
         "管理0名学员档案",
         "邀请码系统：0个",
@@ -286,18 +286,18 @@
     },
     "学生工作处": {
       "status": "normal",
-      "message": "在读0名 | 选课25757次 | 家长绑定0个",
+      "message": "在读0名 | 选课26129次 | 家长绑定0个",
       "icon": "👥",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
         "跟踪0名在读学员",
-        "选课管理25757次",
+        "选课管理26129次",
         "学习预警"
       ],
-      "active_work": "在读0名 | 选课25757次",
+      "active_work": "在读0名 | 选课26129次",
       "achievements": [
-        "选课25757次",
+        "选课26129次",
         "家长绑定0个",
         "预警机制运行中"
       ],
@@ -350,7 +350,7 @@
       "message": "考核系统就绪",
       "icon": "📝",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
         "考核系统待命",
         "题库建设中",
@@ -410,7 +410,7 @@
       "message": "无异常",
       "icon": "⚖️",
       "sop_count": 2,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
         "日常巡查",
         "违纪处理流程维护",
@@ -457,7 +457,7 @@
       "message": "实训平台正常 ✅",
       "icon": "🔧",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:09:06",
+      "updated_at": "2026-03-14T23:29:12",
       "work_plan": [
         "实训平台维护",
         "作品集管理",
@@ -565,33 +565,33 @@
   },
   "recent_logs": [
     {
-      "time": "2026-03-14 23:09",
+      "time": "2026-03-14 23:29",
+      "dept": "IT部门",
+      "action": "9938b3d feat: 事件 Hook 系统 Phase 1-3"
+    },
+    {
+      "time": "2026-03-14 23:29",
       "dept": "IT部门",
       "action": "451a9a3 feat: 家长登录系统 + 基础课包扩充 + 校务委员会v2 + 首页优化"
     },
     {
-      "time": "2026-03-14 23:09",
+      "time": "2026-03-14 23:29",
       "dept": "IT部门",
       "action": "b4af873 feat: 课程体系职业化改造 + 校务委员会展示系统 + 基础技能包SOP"
     },
     {
-      "time": "2026-03-14 23:09",
+      "time": "2026-03-14 23:29",
       "dept": "IT部门",
       "action": "49ec4d4 feat: 225门课程全部完成中文化与学练考设计"
     },
     {
-      "time": "2026-03-14 23:09",
+      "time": "2026-03-14 23:29",
       "dept": "IT部门",
       "action": "aa60a44 fix: 组织架构改为top-to-bottom树形图，去掉三省六部名称"
-    },
-    {
-      "time": "2026-03-14 23:09",
-      "dept": "IT部门",
-      "action": "f296bb0 fix: mock学员打标 + 巡检脚本优化"
     }
   ],
   "_meta": {
-    "last_updated": "2026-03-14T23:09:06",
+    "last_updated": "2026-03-14T23:29:12",
     "data_sources": [
       "lobster.db",
       "SOP文件",
@@ -607,7 +607,7 @@
       "base_courses": 16,
       "total_students": 0,
       "active_students": 0,
-      "total_enrollments": 25757,
+      "total_enrollments": 26129,
       "career_paths": 8,
       "template_obj": 0,
       "few_lessons": 0,
