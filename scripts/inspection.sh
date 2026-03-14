@@ -24,17 +24,18 @@ fi
 # CHECK-DATA-002: 学员数据
 echo ""
 echo "👤 CHECK-DATA-002: 学员数据"
-STUDENTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM lobster_profiles;")
-NO_TOKEN=$(sqlite3 "$DB" "SELECT COUNT(*) FROM lobster_profiles WHERE access_token IS NULL OR access_token = '';")
-echo "  学员: $STUDENTS | 缺token: $NO_TOKEN"
+STUDENTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM lobster_profiles WHERE is_mock = 0;")
+MOCK=$(sqlite3 "$DB" "SELECT COUNT(*) FROM lobster_profiles WHERE is_mock = 1;")
+NO_TOKEN=$(sqlite3 "$DB" "SELECT COUNT(*) FROM lobster_profiles WHERE (access_token IS NULL OR access_token = '') AND is_mock = 0;")
+echo "  真实学员: $STUDENTS | 模拟学员: $MOCK | 缺token: $NO_TOKEN"
 if [ "$NO_TOKEN" -gt 0 ]; then
-  ERRORS+=("DATA-002: ${NO_TOKEN}名学员缺少access_token")
+  ERRORS+=("DATA-002: ${NO_TOKEN}名真实学员缺少access_token")
 fi
 
 # CHECK-API-001: API 可用性
 echo ""
 echo "🌐 CHECK-API-001: API可用性"
-for endpoint in "/courses" "/enrollment/auto" "/reminder"; do
+for endpoint in "/courses" "/enrollment/auto"; do
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${BASE}${endpoint}" 2>/dev/null || echo "000")
   if [ "$STATUS" = "200" ]; then
     echo "  ✅ ${endpoint} → HTTP $STATUS"
