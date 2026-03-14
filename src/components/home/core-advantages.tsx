@@ -22,8 +22,8 @@ const advantages = [
   },
   {
     icon: Rocket,
-    title: "SOP 驱动，效率为王",
-    description: "标准化执行流程，像 Coze 工作流一样精确，每一步都有明确的输入输出和验收标准",
+    title: "流程化教学，步步有章法",
+    description: "每门课程都有清晰的学习路径和验收标准，不靠感觉学，靠体系练，确保每一步都扎实落地",
     color: "from-orange-500 to-red-500",
     bgColor: "bg-orange-50",
     iconColor: "text-orange-600",

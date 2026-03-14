@@ -266,6 +266,39 @@ export const courseProgress = sqliteTable("course_progress", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+// 家长表
+export const parents = sqliteTable("parents", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email"),
+  avatar: text("avatar"),
+  provider: text("provider").notNull(), // google, github, wechat
+  providerId: text("provider_id").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+// 邀请码表
+export const inviteCodes = sqliteTable("invite_codes", {
+  id: text("id").primaryKey(),
+  code: text("code").notNull().unique(), // 6位邀请码 如 LX-A3K9
+  studentId: text("student_id").notNull(), // 关联学员 (lobsterProfiles.id)
+  parentId: text("parent_id"), // 绑定后填入
+  used: integer("used", { mode: "boolean" }).default(false),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(), // 72小时后过期
+  failedAttempts: integer("failed_attempts").default(0),
+  lockedUntil: integer("locked_until", { mode: "timestamp" }),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+// 家长-学员绑定表
+export const parentStudentBindings = sqliteTable("parent_student_bindings", {
+  id: text("id").primaryKey(),
+  parentId: text("parent_id").notNull(),
+  studentId: text("student_id").notNull(), // lobsterProfiles.id
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 // 类型导出
 export type CareerTrack = typeof careerTracks.$inferSelect;
 export type LobsterProfile = typeof lobsterProfiles.$inferSelect;
@@ -279,3 +312,6 @@ export type Certificate = typeof certificates.$inferSelect;
 export type SkillCourse = typeof skillCourses.$inferSelect;
 export type StudentCourse = typeof studentCourses.$inferSelect;
 export type CourseProgress = typeof courseProgress.$inferSelect;
+export type Parent = typeof parents.$inferSelect;
+export type InviteCode = typeof inviteCodes.$inferSelect;
+export type ParentStudentBinding = typeof parentStudentBindings.$inferSelect;

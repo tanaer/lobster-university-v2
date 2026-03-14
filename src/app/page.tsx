@@ -1,7 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { Motto } from "@/components/home/motto";
 import { CoreAdvantages } from "@/components/home/core-advantages";
-import { Departments } from "@/components/home/departments";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -65,19 +64,23 @@ const courseSystems = [
   },
 ];
 
-// 学院组织架构
+// 学院组织架构 — 8 部
+const orgCommittee = { name: "校务委员会", icon: "", desc: "教学标准制定、课程体系规划、政策发布", slogan: "方向对了，路就不会远" };
+
 const orgDepartments = [
-  { name: "教务处", icon: "📚", desc: "课程设计、教学质量、课程体系规划" },
-  { name: "研究院", icon: "🔬", desc: "行业研究、课程创新、技术前沿跟踪" },
-  { name: "质量部", icon: "✅", desc: "课程质量审核、学员反馈处理" },
-  { name: "督察部", icon: "🔍", desc: "SOP 执行监督、巡检管理" },
-  { name: "招生办", icon: "🎓", desc: "学员入学、职业匹配" },
-  { name: "学习部", icon: "📖", desc: "学习辅导、进度跟踪" },
-  { name: "认证部", icon: "🏆", desc: "能力考核、证书发放" },
-  { name: "IT部门", icon: "💻", desc: "系统开发、数据维护、自动化运维" },
+  { name: "教学质量监控中心", icon: "🔍", desc: "课程审核、毕业审核、质量封驳", slogan: "每一条反馈都是进化的燃料" },
+  { name: "教务处", icon: "📚", desc: "教务协调、选课管理、资源分配", slogan: "紧跟行业需求，严选课程内容，确保每一门课都经得起市场检验" },
+  { name: "招生办公室", icon: "🎓", desc: "入学审核、学籍管理、等级晋升", slogan: "不挑最聪明的，只选最想学的" },
+  { name: "学生工作处", icon: "👥", desc: "学员管理、学习预警、奖惩管理", slogan: "没有差学员，只有没跟上的节奏" },
+  { name: "考试中心", icon: "📝", desc: "能力考核、成绩评定、认证考试", slogan: "考的不是记忆力，是真本事" },
+  { name: "纪检监察室", icon: "⚖️", desc: "违纪处理、学员申诉", slogan: "规矩不是束缚，是底线" },
+  { name: "实践教学中心", icon: "🔧", desc: "实践任务、作品集、就业推荐", slogan: "不怕出错，怕的是没练过出错" },
 ];
 
 export default function Home() {
+  const topRow = orgDepartments.slice(0, 4);
+  const bottomRow = orgDepartments.slice(4);
+
   return (
     <>
       <Hero />
@@ -88,49 +91,88 @@ export default function Home() {
       {/* 核心优势 */}
       <CoreAdvantages />
 
-      {/* 部门体系 */}
-      <Departments />
-
       {/* 学院组织架构 */}
-      <section className="py-12 sm:py-16 bg-neutral-50 dark:bg-neutral-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
+      <section className="relative py-16 sm:py-20 bg-neutral-50 dark:bg-neutral-900 overflow-hidden">
+        {/* 背景装饰 */}
+        <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f97316 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-orange-200/20 to-amber-200/20 dark:from-orange-900/10 dark:to-amber-900/10 rounded-full blur-3xl" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 sm:mb-14">
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-4">
-              🏛️ 学院组织架构
+              学院组织架构
             </h2>
-            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400">
+            <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300">
               各司其职，高效协同
             </p>
           </div>
 
-          {/* 树形图：自上而下 */}
           <div className="flex flex-col items-center">
-            {/* 顶层：校务委员会 */}
-            <div className="px-8 py-4 rounded-xl bg-orange-500 text-white font-bold text-lg shadow-lg">
-              👑 校务委员会
+            {/* 顶层：校务委员会 — 大卡片 */}
+            <div className="group">
+              <div className="relative px-10 py-6 rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-neutral-900 dark:text-white mb-1">{orgCommittee.name}</div>
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-2">{orgCommittee.desc}</p>
+                  <p className="text-xs text-orange-600 dark:text-orange-400 italic">&ldquo;{orgCommittee.slogan}&rdquo;</p>
+                </div>
+              </div>
             </div>
 
-            {/* 连接线 */}
-            <div className="w-px h-8 bg-orange-300 dark:bg-orange-600" />
+            {/* 主连接线 */}
+            <div className="w-px h-10 bg-gradient-to-b from-orange-400 to-orange-300 dark:from-orange-500 dark:to-orange-700" />
 
-            {/* 中间横线 */}
-            <div className="hidden md:block w-[80%] max-w-4xl h-px bg-orange-300 dark:bg-orange-600" />
+            {/* 横向分支线 — 桌面端 */}
+            <div className="hidden md:block relative w-full max-w-5xl">
+              <div className="h-px bg-orange-300 dark:bg-orange-700 mx-[12.5%]" />
+            </div>
 
-            {/* 部门网格 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 w-full max-w-5xl">
-              {orgDepartments.map((dept) => (
+            {/* 第一行：4 个部门 */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 mt-0 w-full max-w-5xl">
+              {topRow.map((dept) => (
                 <div key={dept.name} className="flex flex-col items-center">
-                  {/* 连接线 */}
-                  <div className="hidden md:block w-px h-4 bg-orange-300 dark:bg-orange-600" />
-                  {/* 部门卡片 */}
-                  <div className="w-full p-4 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-center hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-md transition-all">
-                    <div className="text-2xl mb-2">{dept.icon}</div>
-                    <div className="font-bold text-sm text-neutral-900 dark:text-white mb-1">
-                      {dept.name}
+                  <div className="hidden md:block w-px h-5 bg-orange-300 dark:bg-orange-700" />
+                  <div className="w-full group">
+                    <div className="w-full p-4 sm:p-5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-center transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-lg group-hover:shadow-orange-500/10 group-hover:border-orange-300 dark:group-hover:border-orange-600">
+                      <div className="text-3xl mb-2">{dept.icon}</div>
+                      <div className="font-bold text-base text-neutral-900 dark:text-white mb-1">
+                        {dept.name}
+                      </div>
+                      <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-relaxed mb-2">
+                        {dept.desc}
+                      </p>
+                      <p className="text-[11px] text-orange-600 dark:text-orange-400 italic leading-relaxed">
+                        &ldquo;{dept.slogan}&rdquo;
+                      </p>
                     </div>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                      {dept.desc}
-                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* 第二行连接线 — 桌面端 */}
+            <div className="hidden md:block relative w-full max-w-5xl mt-4">
+              <div className="h-px bg-orange-300 dark:bg-orange-700 mx-[20%]" />
+            </div>
+
+            {/* 第二行：3 个部门 */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 mt-0 w-full max-w-4xl">
+              {bottomRow.map((dept) => (
+                <div key={dept.name} className="flex flex-col items-center">
+                  <div className="hidden md:block w-px h-5 bg-orange-300 dark:bg-orange-700" />
+                  <div className="w-full group">
+                    <div className="w-full p-4 sm:p-5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-center transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-lg group-hover:shadow-orange-500/10 group-hover:border-orange-300 dark:group-hover:border-orange-600">
+                      <div className="text-3xl mb-2">{dept.icon}</div>
+                      <div className="font-bold text-base text-neutral-900 dark:text-white mb-1">
+                        {dept.name}
+                      </div>
+                      <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-relaxed mb-2">
+                        {dept.desc}
+                      </p>
+                      <p className="text-[11px] text-orange-600 dark:text-orange-400 italic leading-relaxed">
+                        &ldquo;{dept.slogan}&rdquo;
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -144,7 +186,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-4">
-              🎯 课程体系
+              课程体系
             </h2>
             <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400">
               面向岗位设计，跟着路径学就能上岗

@@ -194,7 +194,9 @@ export default function CoursesPage() {
         </div>
 
         {/* 课程列表 */}
-        <CoursesList />
+        <div id="courses-list">
+          <CoursesList />
+        </div>
       </div>
     </div>
   );
@@ -242,9 +244,12 @@ function CareerCard({ path }: { path: CareerPath }) {
         </div>
 
         {/* 按钮 */}
-        <button className="w-full text-sm font-medium py-2 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:opacity-90 transition-opacity">
+        <a
+          href="#courses-list"
+          className="block w-full text-sm font-medium py-2 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:opacity-90 transition-opacity text-center"
+        >
           查看课程体系 →
-        </button>
+        </a>
       </div>
     </div>
   );
