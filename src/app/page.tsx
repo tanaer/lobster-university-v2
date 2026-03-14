@@ -5,49 +5,43 @@ import { Departments } from "@/components/home/departments";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-// 热门课程（按职业方向）
+// 热门课程方向（按实际课程体系）
 const hotCourses = [
   {
-    title: "客户服务",
-    icon: "💬",
-    desc: "处理客户咨询、完成工单全流程、维护FAQ知识库",
-    students: 2180,
-    lessons: 12,
+    title: "Agent 开发",
+    icon: "🤖",
+    desc: "掌握 Agent 编排、记忆系统、多 Agent 协作协议，构建智能体应用",
+    lessons: 6,
   },
   {
-    title: "数据录入",
-    icon: "📝",
-    desc: "完成数据录入、清洗脏数据、批量处理文档",
-    students: 1560,
-    lessons: 9,
+    title: "MCP 工具",
+    icon: "🔌",
+    desc: "深入理解 MCP 协议，开发自定义 Server，连接 AI 与外部世界",
+    lessons: 5,
   },
   {
-    title: "内容创作",
-    icon: "✍️",
-    desc: "产出SEO文章、撰写产品文案、运营社媒账号",
-    students: 1890,
-    lessons: 14,
+    title: "AI 开发工具",
+    icon: "🧠",
+    desc: "精通 Claude Code、Codex、RAG 检索增强、Prompt Engineering",
+    lessons: 7,
   },
   {
-    title: "电商运营",
-    icon: "🛒",
-    desc: "完成店铺运营、生成销售日报、策划促销活动",
-    students: 3245,
-    lessons: 16,
+    title: "DevOps 自动化",
+    icon: "🚀",
+    desc: "Docker 容器化、CI/CD 流水线、GitHub Actions、基础设施即代码",
+    lessons: 5,
   },
   {
-    title: "数据分析",
+    title: "前端开发",
+    icon: "⚛️",
+    desc: "React 19、Next.js 15、性能优化、现代前端工程化实践",
+    lessons: 5,
+  },
+  {
+    title: "数据科学",
     icon: "📊",
-    desc: "完成数据清洗、制作数据看板、输出趋势报告",
-    students: 1420,
-    lessons: 11,
-  },
-  {
-    title: "行政助理",
-    icon: "📋",
-    desc: "管理领导日程、组织安排会议、处理日常邮件",
-    students: 980,
-    lessons: 8,
+    desc: "数据可视化、Google Analytics、金融数据分析、智能报表生成",
+    lessons: 6,
   },
 ];
 
@@ -93,8 +87,7 @@ export default function Home() {
                   {course.desc}
                 </p>
                 <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-500">
-                  <span>📚 {course.lessons} 节课</span>
-                  <span>👥 {course.students.toLocaleString()} 人在学</span>
+                  <span>📚 {course.lessons} 门课程</span>
                 </div>
               </div>
             ))}

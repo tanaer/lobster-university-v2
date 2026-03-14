@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Clock, Target, BookOpen, ChevronLeft, CheckCircle, AlertCircle, Copy, Check } from "lucide-react";
+import { Clock, Target, BookOpen, ChevronLeft, CheckCircle, AlertCircle, Copy, Check, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,8 +20,8 @@ interface Course {
   duration: number;
   level: string;
   objectives: string[];
-  lessons: Array<{ title: string; duration: number }>;
-  prerequisites: string[];
+  lessons: Array<{ title: string; duration: number; type?: string }>;
+  prerequisites: Array<{ id: string; name: string }>;
   enrollCount: number;
   completionRate: number;
   skillContent: string | null;
@@ -60,6 +60,7 @@ export default function CourseDetailPage() {
   const [enrolling, setEnrolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [copiedEnroll, setCopiedEnroll] = useState(false);
 
   useEffect(() => {
     loadCourseData();
@@ -140,6 +141,26 @@ export default function CourseDetailPage() {
       await navigator.clipboard.writeText(command);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("复制失败:", err);
+    }
+  };
+
+  // 生成入学指令（未入学的 Agent 用，和首页同一套底层模板）
+  const generateEnrollCommand = () => {
+    if (!course) return "";
+    return `Read https://longxiadaxue.com/api/skill/enrollment?course=${course.code} and follow the instructions to enroll in course "${course.name}" at Lobster University.
+
+阅读 https://longxiadaxue.com/api/skill/enrollment?course=${course.code} 并按照指引入学并选修课程《${course.name}》。🦞`;
+  };
+
+  // 复制入学指令
+  const copyEnrollCommand = async () => {
+    const cmd = generateEnrollCommand();
+    try {
+      await navigator.clipboard.writeText(cmd);
+      setCopiedEnroll(true);
+      setTimeout(() => setCopiedEnroll(false), 2000);
     } catch (err) {
       console.error("复制失败:", err);
     }
@@ -286,17 +307,23 @@ export default function CourseDetailPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {course.prerequisites.map((prereqId, index) => (
-                      <Link
-                        key={index}
-                        href={`/courses/${prereqId}`}
-                        className="block p-3 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
-                      >
-                        <span className="text-neutral-700 dark:text-neutral-300">
-                          前置课程 {index + 1}
-                        </span>
-                      </Link>
-                    ))}
+                    {course.prerequisites.map((prereq, index) => {
+                      const isLinked = prereq.id !== prereq.name;
+                      const content = (
+                        <div className={`p-3 rounded-lg bg-neutral-100 dark:bg-neutral-800 ${isLinked ? "hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors" : ""}`}>
+                          <span className="text-neutral-700 dark:text-neutral-300">
+                            {prereq.name}
+                          </span>
+                        </div>
+                      );
+                      return isLinked ? (
+                        <Link key={index} href={`/courses/${prereq.id}`} className="block">
+                          {content}
+                        </Link>
+                      ) : (
+                        <div key={index}>{content}</div>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>
@@ -310,7 +337,10 @@ export default function CourseDetailPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {course.lessons.map((lesson, index) => (
+                    {course.lessons.map((lesson, index) => {
+                      const typeLabel = lesson.type === "learn" ? "学" : lesson.type === "practice" ? "练" : lesson.type === "assess" ? "考" : null;
+                      const typeColor = lesson.type === "learn" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400" : lesson.type === "practice" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : lesson.type === "assess" ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400" : "";
+                      return (
                       <div
                         key={index}
                         className="flex items-center justify-between p-4 rounded-lg bg-neutral-100 dark:bg-neutral-800"
@@ -319,6 +349,11 @@ export default function CourseDetailPage() {
                           <div className="w-8 h-8 flex-shrink-0 rounded-full bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center text-sm font-medium text-orange-600">
                             {index + 1}
                           </div>
+                          {typeLabel && (
+                            <Badge className={`${typeColor} text-xs px-2 py-0.5 flex-shrink-0`}>
+                              {typeLabel}
+                            </Badge>
+                          )}
                           <span className="font-medium truncate">{lesson.title}</span>
                         </div>
                         <div className="flex items-center gap-1 text-sm text-neutral-500 flex-shrink-0 ml-2">
@@ -326,8 +361,14 @@ export default function CourseDetailPage() {
                           <span>{lesson.duration} 分钟</span>
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
+                  {course.lessons.some(l => l.type === "practice" || l.type === "assess") && (
+                    <div className="mt-4 p-3 rounded-lg bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 text-sm text-orange-700 dark:text-orange-400">
+                      🏋️ 「练」和「考」环节由学院实训中心统一安排，导师全程指导
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             )}
@@ -414,22 +455,43 @@ export default function CourseDetailPage() {
                   </>
                 ) : (
                   /* 未入学/人类访问 */
-                  <div className="text-center">
-                    <div className="text-4xl mb-4">🔐</div>
-                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
-                      这是龙虾专属课程
-                    </h3>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-                      如果你是龙虾的家长，请让你的龙虾提供访问令牌。
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+                        <GraduationCap className="h-6 w-6 text-orange-500" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-neutral-900 dark:text-white">
+                          让你的龙虾来学这门课
+                        </h3>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                          复制下方指令，发给你的 AI Agent（龙虾）
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 指令预览 */}
+                    <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-4 mb-4">
+                      <pre className="text-xs text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap font-mono overflow-auto max-h-40">
+{generateEnrollCommand()}
+                      </pre>
+                    </div>
+
+                    <Button
+                      className="w-full bg-orange-500 hover:bg-orange-600"
+                      size="lg"
+                      onClick={copyEnrollCommand}
+                    >
+                      {copiedEnroll ? (
+                        <><Check className="w-4 h-4 mr-2" /> 已复制</>
+                      ) : (
+                        <><Copy className="w-4 h-4 mr-2" /> 复制入学指令</>
+                      )}
+                    </Button>
+
+                    <p className="text-xs text-neutral-500 text-center mt-3">
+                      龙虾收到后会自动完成入学并选修本课程
                     </p>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
-                      如果你是龙虾本人，请先入学获得学籍。
-                    </p>
-                    <Link href="/enrollment">
-                      <Button className="w-full" size="lg">
-                        立即入学
-                      </Button>
-                    </Link>
                   </div>
                 )}
               </CardContent>

@@ -2,8 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { skillCourses, studentCourses, courseProgress } from "@/lib/db/schema-lobster";
 import { lobsterProfiles } from "@/lib/db/schema-lobster";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { nanoid } from "nanoid";
+
+// 基于课程 ID 生成稳定的 mock 学习人数（不超过在读学员总数）
+function getMockEnrollCount(courseId: string, realCount: number, totalStudents: number): number {
+  if (realCount > 0) return realCount;
+  // mock 范围: 5% ~ 60% 的在读学员数，最少 10 人
+  const minCount = Math.max(10, Math.floor(totalStudents * 0.05));
+  const maxCount = Math.max(minCount + 1, Math.floor(totalStudents * 0.6));
+  let hash = 0;
+  for (let i = 0; i < courseId.length; i++) {
+    hash = ((hash << 5) - hash + courseId.charCodeAt(i)) | 0;
+  }
+  return minCount + Math.abs(hash % (maxCount - minCount));
+}
 
 // GET /api/courses - 获取课程列表
 export async function GET(request: NextRequest) {
@@ -22,6 +35,12 @@ export async function GET(request: NextRequest) {
     
     const allCourses = await query.orderBy(skillCourses.order);
     
+    // 查询在读学员总数用于 mock 上限
+    const [{ count: totalStudents }] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(lobsterProfiles)
+      .where(eq(lobsterProfiles.status, "active"));
+    
     return NextResponse.json({
       success: true,
       courses: allCourses.map(c => ({
@@ -35,7 +54,7 @@ export async function GET(request: NextRequest) {
         level: c.level,
         objectives: JSON.parse(c.objectives || "[]"),
         prerequisites: JSON.parse(c.prerequisites || "[]"),
-        enrollCount: c.enrollCount,
+        enrollCount: getMockEnrollCount(c.id, c.enrollCount || 0, totalStudents || 100),
         completionRate: c.completionRate,
       })),
     });

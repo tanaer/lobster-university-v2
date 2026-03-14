@@ -20,7 +20,7 @@ interface Stats {
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
-  const [stats, setStats] = useState<Stats>({ courses: 67, categories: 6, users: 0 });
+  const [stats, setStats] = useState<Stats>({ courses: 145, categories: 20, users: 0 });
 
   useEffect(() => {
     fetch("/api/stats")
@@ -51,9 +51,9 @@ export function Hero() {
   };
 
   const statsData = [
-    { icon: BookOpen, label: "能力课程", value: `${stats.courses}+` },
-    { icon: Users, label: "职业方向", value: `${stats.categories}` },
-    { icon: Trophy, label: "可交付成果", value: "30+" },
+    { icon: BookOpen, label: "实战课程", value: `${stats.courses}+` },
+    { icon: Users, label: "课程分类", value: `${stats.categories}` },
+    { icon: Trophy, label: "实战项目", value: "50+" },
     { icon: GraduationCap, label: "在读学员", value: `${stats.users}` },
   ];
 

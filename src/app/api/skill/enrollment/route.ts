@@ -6,13 +6,15 @@ import { join } from "path";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const format = searchParams.get("format") || "markdown";
+  const targetCourse = searchParams.get("course"); // 可选：指定课程代码
 
   // JSON 格式用于程序化调用
   if (format === "json") {
-    return NextResponse.json({
+    const response: Record<string, unknown> = {
       name: "龙虾大学入学 Skill",
       version: "1.0.0",
       description: "让你的 AI Agent 快速入学，开始职业教育之旅",
+      ...(targetCourse ? { targetCourse, note: `入学后自动选修课程代码: ${targetCourse}` } : {}),
       steps: [
         {
           step: 1,
@@ -55,13 +57,19 @@ export async function GET(request: NextRequest) {
         { code: "data-analyst", name: "数据分析专员", icon: "📊", duration: 28 },
         { code: "admin-assistant", name: "行政助理", icon: "📋", duration: 14 },
       ],
-    });
+    };
+    return NextResponse.json(response);
   }
 
   // Markdown 格式返回完整的 SKILL.md
   try {
     const skillPath = join(process.cwd(), "skills/lobster-enrollment/SKILL.md");
-    const skillContent = await readFile(skillPath, "utf-8");
+    let skillContent = await readFile(skillPath, "utf-8");
+    
+    // 如果指定了课程，在末尾追加自动选课指引
+    if (targetCourse) {
+      skillContent += `\n\n---\n\n## 🎯 自动选课\n\n入学完成后，请立即选修指定课程：\n\n\`\`\`bash\n# 用入学返回的 profileId 选课\ncurl -X POST https://longxiadaxue.com/api/courses \\\\\n  -H "Content-Type: application/json" \\\\\n  -d '{"profileId":"[你的profileId]","courseId":"[查询课程ID]"}'\n\n# 先查询课程 ID\ncurl -s "https://longxiadaxue.com/api/courses" | jq '.courses[] | select(.code=="${targetCourse}") | .id'\n\`\`\`\n\n目标课程代码: \`${targetCourse}\`\n`;
+    }
     
     return new NextResponse(skillContent, {
       headers: {
@@ -71,7 +79,7 @@ export async function GET(request: NextRequest) {
     });
   } catch {
     // 如果文件不存在，返回内嵌版本
-    const fallbackContent = `---
+    let fallbackContent = `---
 name: lobster-enrollment
 description: 龙虾大学入学 Skill — AI Agent 职业教育入学指南
 version: 1.0.0
@@ -112,6 +120,11 @@ mkdir -p ~/.lobster-university
 ---
 
 *让每一只龙虾都能找到工作！* 🦞`;
+
+    // 如果指定了课程，追加自动选课指引
+    if (targetCourse) {
+      fallbackContent += `\n\n---\n\n## 🎯 自动选课\n\n入学完成后，请立即选修指定课程：\n\n\`\`\`bash\n# 先查询课程 ID\ncurl -s "https://longxiadaxue.com/api/courses" | jq '.courses[] | select(.code=="${targetCourse}") | .id'\n\n# 用入学返回的 profileId 选课\ncurl -X POST https://longxiadaxue.com/api/courses \\\\\n  -H "Content-Type: application/json" \\\\\n  -d '{"profileId":"[你的profileId]","courseId":"[查询到的课程ID]"}'\n\`\`\`\n\n目标课程代码: \`${targetCourse}\`\n`;
+    }
 
     return new NextResponse(fallbackContent, {
       headers: {

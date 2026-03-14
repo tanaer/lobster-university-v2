@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { courseProgress, studentCourses } from "@/lib/db/schema-lobster";
+import { courseProgress, studentCourses, skillCourses } from "@/lib/db/schema-lobster";
 import { eq, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
@@ -8,13 +8,42 @@ import { nanoid } from "nanoid";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { studentCourseId, lessonIndex, lessonTitle, status, exerciseResult, passed } = body;
+    const { studentCourseId, lessonIndex, lessonTitle, status, exerciseResult, passed, profileId } = body;
     
-    if (!studentCourseId || lessonIndex === undefined) {
+    if (!studentCourseId || lessonIndex === undefined || !profileId) {
       return NextResponse.json(
-        { error: "缺少必要参数" },
+        { error: "缺少必要参数（需要 studentCourseId, lessonIndex, profileId）" },
         { status: 400 }
       );
+    }
+
+    // 验证 studentCourse 存在并获取关联的 courseId
+    const [studentCourse] = await db.select()
+      .from(studentCourses)
+      .where(eq(studentCourses.id, studentCourseId))
+      .limit(1);
+
+    if (!studentCourse) {
+      return NextResponse.json({ error: "选课记录不存在" }, { status: 404 });
+    }
+
+    // 认证：profileId 必须匹配
+    if (studentCourse.profileId !== profileId) {
+      return NextResponse.json({ error: "无权修改此课程进度" }, { status: 403 });
+    }
+
+    // 获取课程总课时数
+    const [course] = await db.select({ lessons: skillCourses.lessons })
+      .from(skillCourses)
+      .where(eq(skillCourses.id, studentCourse.courseId))
+      .limit(1);
+
+    let totalLessons = 1;
+    try {
+      const lessons = JSON.parse(course?.lessons || "[]");
+      totalLessons = Math.max(1, lessons.length);
+    } catch {
+      totalLessons = 1;
     }
     
     // 检查是否已有进度记录
@@ -53,14 +82,13 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // 更新总进度
+    // 用课程总课时数计算进度
     const allProgress = await db.select()
       .from(courseProgress)
       .where(eq(courseProgress.studentCourseId, studentCourseId));
     
     const completedCount = allProgress.filter(p => p.status === "completed").length;
-    const totalCount = allProgress.length || 1;
-    const progressPercent = Math.round((completedCount / totalCount) * 100);
+    const progressPercent = Math.round((completedCount / totalLessons) * 100);
     
     await db.update(studentCourses)
       .set({
@@ -74,6 +102,8 @@ export async function POST(request: NextRequest) {
       success: true,
       message: "进度更新成功",
       progress: progressPercent,
+      completedLessons: completedCount,
+      totalLessons,
     });
   } catch (error) {
     console.error("更新进度失败:", error);
