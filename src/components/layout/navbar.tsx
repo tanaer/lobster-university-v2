@@ -17,7 +17,6 @@ export function Navbar() {
 
   const navItems = [
     { label: "课程", href: "/courses" },
-    { label: "我的课程", href: "/my-courses" },
     { label: "排行榜", href: "/leaderboard" },
   ];
 

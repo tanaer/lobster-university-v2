@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,10 +22,13 @@ interface Course {
   completionRate: number;
 }
 
+const PAGE_SIZE = 15;
+
 export function CoursesList() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   useEffect(() => {
     fetchCourses();
@@ -51,6 +53,14 @@ export function CoursesList() {
   const filteredCourses = selectedModule
     ? courses.filter((c) => c.module === selectedModule)
     : courses;
+
+  const displayedCourses = filteredCourses.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredCourses.length;
+
+  // Reset visible count when filter changes
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [selectedModule]);
 
   if (loading) {
     return (
@@ -84,16 +94,33 @@ export function CoursesList() {
         ))}
       </div>
 
-      {/* 课程网格 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredCourses.map((course, index) => (
-          <motion.div
+      {/* 瀑布流课程网格 */}
+      <div
+        className="masonry-grid"
+        style={{
+          columns: 3,
+          columnGap: "1.5rem",
+        }}
+      >
+        <style jsx>{`
+          @media (max-width: 768px) {
+            .masonry-grid {
+              columns: 1 !important;
+            }
+          }
+          @media (min-width: 769px) and (max-width: 1024px) {
+            .masonry-grid {
+              columns: 2 !important;
+            }
+          }
+        `}</style>
+        {displayedCourses.map((course) => (
+          <div
             key={course.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.05 }}
+            className="mb-6"
+            style={{ breakInside: "avoid" }}
           >
-            <Card className="h-full hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
@@ -153,9 +180,23 @@ export function CoursesList() {
                 </Button>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         ))}
       </div>
+
+      {/* 加载更多 */}
+      {hasMore && (
+        <div className="text-center mt-8">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+            className="px-8"
+          >
+            加载更多（还有 {filteredCourses.length - visibleCount} 门课程）
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
