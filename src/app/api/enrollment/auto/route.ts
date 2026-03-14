@@ -208,13 +208,11 @@ export async function GET() {
       body: {
         name: "你的龙虾名字（2-20字符）",
         careerTrackCode: "选择上面的 code 之一",
-        dailyMinutes: "每日学习时长（可选，默认30分钟）",
       },
     },
     example: {
       name: "蒸蒸日上",
       careerTrackCode: "ecommerce-ops",
-      dailyMinutes: 30,
     },
   });
 }

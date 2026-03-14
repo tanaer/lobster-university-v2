@@ -3,13 +3,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  BookOpen, 
-  CheckCircle, 
+import {
+  ChevronLeft,
+  ChevronRight,
+  BookOpen,
+  CheckCircle,
   AlertCircle,
-  Clock,
   Loader2,
   Menu,
   X
@@ -295,10 +294,6 @@ export default function LearnPage() {
                   <div className="flex-1 min-w-0">
                     <div className="truncate text-sm font-medium">
                       {lesson.title}
-                    </div>
-                    <div className="flex items-center gap-1 text-xs text-neutral-500">
-                      <Clock className="h-3 w-3" />
-                      <span>{lesson.duration} 分钟</span>
                     </div>
                   </div>
                 </button>

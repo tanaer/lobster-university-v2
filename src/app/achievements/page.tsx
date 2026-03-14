@@ -34,7 +34,7 @@ const achievementsByCategory = {
     {
       id: "streak_3",
       name: "三天成习",
-      description: "连续学习 3 天",
+      description: "完成 3 个学习任务",
       icon: "🌱",
       exp: 100,
       unlocked: false,
@@ -42,7 +42,7 @@ const achievementsByCategory = {
     {
       id: "streak_7",
       name: "自律达人",
-      description: "连续学习 7 天",
+      description: "完成 7 个学习任务",
       icon: "🔥",
       exp: 200,
       unlocked: false,

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Clock, Target, BookOpen, ChevronLeft, CheckCircle, AlertCircle, Copy, Check, GraduationCap } from "lucide-react";
+import { Target, BookOpen, ChevronLeft, CheckCircle, AlertCircle, Copy, Check, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -262,10 +262,6 @@ export default function CourseDetailPage() {
 
               <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
                 <div className="flex items-center gap-1">
-                  <Clock className="h-5 w-5" />
-                  <span>{course.duration} 分钟</span>
-                </div>
-                <div className="flex items-center gap-1">
                   <BookOpen className="h-5 w-5" />
                   <span>{course.lessons?.length || 0} 课时</span>
                 </div>
@@ -355,10 +351,6 @@ export default function CourseDetailPage() {
                             </Badge>
                           )}
                           <span className="font-medium truncate">{lesson.title}</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-sm text-neutral-500 flex-shrink-0 ml-2">
-                          <Clock className="h-4 w-4" />
-                          <span>{lesson.duration} 分钟</span>
                         </div>
                       </div>
                       );

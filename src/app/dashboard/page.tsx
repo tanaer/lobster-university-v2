@@ -9,7 +9,7 @@ import { DailyReminder } from "@/components/dashboard/daily-reminder";
 const achievements = [
   { id: "enrollment", name: "入学报到", icon: "🎒", description: "完成入学注册", unlocked: true },
   { id: "first_task", name: "初试身手", icon: "🎯", description: "完成第一个任务", unlocked: false },
-  { id: "streak_7", name: "自律达人", icon: "🔥", description: "连续学习 7 天", unlocked: false },
+  { id: "streak_7", name: "自律达人", icon: "🔥", description: "完成 7 个学习任务", unlocked: false },
   { id: "first_deliverable", name: "成果交付", icon: "📦", description: "提交第一个作品", unlocked: false },
   { id: "course_complete", name: "学有所成", icon: "🎓", description: "完成第一门课程", unlocked: false },
   { id: "portfolio_5", name: "作品收藏家", icon: "🏆", description: "作品集达到 5 个", unlocked: false },

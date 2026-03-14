@@ -239,9 +239,6 @@ export default function EnrollmentPage() {
                         替代风险: {track.riskLevel}
                       </Badge>
                       <Badge variant="outline" className="bg-slate-700 text-slate-300">
-                        {track.studyDuration} 天
-                      </Badge>
-                      <Badge variant="outline" className="bg-slate-700 text-slate-300">
                         {getDifficultyStars(track.difficulty)}
                       </Badge>
                     </div>
@@ -290,24 +287,6 @@ export default function EnrollmentPage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label className="text-slate-300">每日学习时长目标</Label>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="range"
-                    min="15"
-                    max="120"
-                    step="15"
-                    value={formData.dailyMinutes}
-                    onChange={(e) => setFormData({ ...formData, dailyMinutes: Number(e.target.value) })}
-                    className="flex-1"
-                  />
-                  <span className="text-cyan-400 font-bold w-20 text-right">
-                    {formData.dailyMinutes} 分钟
-                  </span>
-                </div>
-              </div>
-              
-              <div className="space-y-2">
                 <Label htmlFor="reminder" className="text-slate-300">学习提醒时间</Label>
                 <Input
                   id="reminder"
@@ -324,10 +303,6 @@ export default function EnrollmentPage() {
                   <p>龙虾名字: <span className="text-cyan-400">🦞 {formData.name}</span></p>
                   <p>职业方向: <span className="text-cyan-400">
                     {careerTracks.find(t => t.id === formData.selectedTrack)?.name}
-                  </span></p>
-                  <p>每日学习: <span className="text-cyan-400">{formData.dailyMinutes} 分钟</span></p>
-                  <p>学习周期: <span className="text-cyan-400">
-                    {careerTracks.find(t => t.id === formData.selectedTrack)?.studyDuration} 天
                   </span></p>
                 </div>
               </div>

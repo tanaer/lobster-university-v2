@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { BookOpen, Clock, Trophy, TrendingUp, Users, Plus, Loader2 } from "lucide-react";
+import { BookOpen, Trophy, TrendingUp, Users, Plus, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -144,12 +144,7 @@ export default function ParentDashboardPage() {
 
                 <CardContent className="pt-6">
                   {/* 统计卡片 */}
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-                    <div className="text-center p-3 rounded-lg bg-neutral-50 dark:bg-neutral-800/50">
-                      <Clock className="h-5 w-5 text-blue-500 mx-auto mb-1" />
-                      <div className="text-lg font-bold">{student.stats.totalStudyTime}</div>
-                      <div className="text-xs text-neutral-500">学习分钟</div>
-                    </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div className="text-center p-3 rounded-lg bg-neutral-50 dark:bg-neutral-800/50">
                       <BookOpen className="h-5 w-5 text-green-500 mx-auto mb-1" />
                       <div className="text-lg font-bold">{student.stats.completedCourses}</div>
@@ -195,8 +190,8 @@ export default function ParentDashboardPage() {
                                 </p>
                               </div>
                             </div>
-                            <Badge variant="outline" className="text-xs">
-                              {log.duration} 分钟
+                            <Badge variant="outline" className="text-xs text-green-600 border-green-500/50">
+                              已完成
                             </Badge>
                           </div>
                         ))}
