@@ -5,7 +5,7 @@
       "message": "8条职业路径 | 235门课程 | 20个SOP文件",
       "icon": "👑",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "管理8条职业路径",
         "监督20个SOP执行",
@@ -21,41 +21,6 @@
         {
           "id": "COUNCIL-001",
           "name": "教学标准制定",
-          "description": "制定和更新教学标准",
-          "steps": [
-            "1. 收集行业需求",
-            "2. 分析岗位技能要求",
-            "3. 制定课程标准",
-            "4. 审批发布"
-          ],
-          "monthly_executions": 3,
-          "success_count": 3,
-          "fail_count": 0
-        },
-        {
-          "id": "COUNCIL-002",
-          "name": "课程体系规划",
-          "description": "规划课程结构和职业路径",
-          "steps": [
-            "1. 市场调研",
-            "2. 岗位分析",
-            "3. 课程设计",
-            "4. 评审通过"
-          ],
-          "monthly_executions": 2,
-          "success_count": 2,
-          "fail_count": 0
-        },
-        {
-          "id": "COUNCIL-003",
-          "name": "政策发布",
-          "description": "发布学校政策和规章制度",
-          "steps": [
-            "1. 起草政策",
-            "2. 征求意见",
-            "3. 修订完善",
-            "4. 正式发布"
-          ],
           "monthly_executions": 1,
           "success_count": 1,
           "fail_count": 0
@@ -67,7 +32,7 @@
       "message": "质量验收通过 ✅",
       "icon": "🔍",
       "sop_count": 6,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "监控235门课程质量",
         "course-qa.sh 自动验收",
@@ -78,88 +43,6 @@
         "验收状态：✅通过",
         "监控235门课程",
         "自动化验收脚本运行中"
-      ],
-      "sops": [
-        {
-          "id": "QUALITY-001",
-          "name": "入学能力匹配",
-          "description": "确保课程匹配学员能力",
-          "steps": [
-            "1. 评估学员基础",
-            "2. 推荐适配课程",
-            "3. 确认选课"
-          ],
-          "monthly_executions": 45,
-          "success_count": 43,
-          "fail_count": 2
-        },
-        {
-          "id": "QUALITY-002",
-          "name": "学习过程监控",
-          "description": "实时监控学习进度",
-          "steps": [
-            "1. 采集学习数据",
-            "2. 分析异常",
-            "3. 预警干预"
-          ],
-          "monthly_executions": 120,
-          "success_count": 118,
-          "fail_count": 2
-        },
-        {
-          "id": "QUALITY-003",
-          "name": "严格考核标准",
-          "description": "三关考核五维评估",
-          "steps": [
-            "1. 理论考核",
-            "2. 实操考核",
-            "3. 综合评估"
-          ],
-          "monthly_executions": 38,
-          "success_count": 35,
-          "fail_count": 3
-        },
-        {
-          "id": "QUALITY-004",
-          "name": "价值产出保障",
-          "description": "确保产出实际价值",
-          "steps": [
-            "1. 成果验收",
-            "2. 价值评估",
-            "3. 反馈优化"
-          ],
-          "monthly_executions": 30,
-          "success_count": 28,
-          "fail_count": 2
-        },
-        {
-          "id": "QUALITY-005",
-          "name": "100%通过保障",
-          "description": "辅导支持直到通过",
-          "steps": [
-            "1. 诊断问题",
-            "2. 制定辅导方案",
-            "3. 跟踪辅导",
-            "4. 重新考核"
-          ],
-          "monthly_executions": 8,
-          "success_count": 7,
-          "fail_count": 1
-        },
-        {
-          "id": "QA-001",
-          "name": "课程审核",
-          "description": "审核新课程质量",
-          "steps": [
-            "1. 内容审核",
-            "2. 结构审核",
-            "3. 质量评分",
-            "4. 通过/退回"
-          ],
-          "monthly_executions": 15,
-          "success_count": 12,
-          "fail_count": 3
-        }
       ]
     },
     "教务处": {
@@ -167,7 +50,7 @@
       "message": "235门课程 | 30个分类 | 基础课包16门",
       "icon": "📚",
       "sop_count": 4,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "JD扫描提案：83条待研判",
         "基础课包维护：16门",
@@ -182,44 +65,17 @@
       "sops": [
         {
           "id": "ACAD-001",
-          "name": "日常教务协调",
-          "description": "协调跨部门教务事务",
-          "steps": [
-            "1. 收集需求",
-            "2. 协调资源",
-            "3. 跟踪执行",
-            "4. 反馈结果"
-          ],
-          "monthly_executions": 25,
-          "success_count": 24,
-          "fail_count": 1
+          "name": "选课管理",
+          "monthly_executions": 0,
+          "success_count": 0,
+          "fail_count": 0
         },
         {
           "id": "ACAD-002",
-          "name": "学员选课",
-          "description": "管理学员选课流程",
-          "steps": [
-            "1. 发布课程",
-            "2. 接收选课",
-            "3. 确认排课",
-            "4. 通知学员"
-          ],
-          "monthly_executions": 50,
-          "success_count": 48,
-          "fail_count": 2
-        },
-        {
-          "id": "ACAD-003",
-          "name": "学习资源分配",
-          "description": "分配学习资源和教材",
-          "steps": [
-            "1. 评估需求",
-            "2. 分配资源",
-            "3. 确认到位"
-          ],
-          "monthly_executions": 40,
-          "success_count": 39,
-          "fail_count": 1
+          "name": "学习进度跟踪",
+          "monthly_executions": 0,
+          "success_count": 0,
+          "fail_count": 0
         }
       ]
     },
@@ -228,7 +84,7 @@
       "message": "学员0名 | 在读0名 | 邀请码0个(已用0)",
       "icon": "🎓",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "管理0名学员档案",
         "邀请码系统：0个",
@@ -243,44 +99,17 @@
       "sops": [
         {
           "id": "ADMIT-001",
-          "name": "入学申请审核",
-          "description": "审核入学资格",
-          "steps": [
-            "1. 接收申请",
-            "2. 资格审核",
-            "3. 能力评估",
-            "4. 录取通知"
-          ],
-          "monthly_executions": 35,
-          "success_count": 33,
-          "fail_count": 2
-        },
-        {
-          "id": "ADMIT-002",
-          "name": "学籍档案管理",
-          "description": "管理学籍档案",
-          "steps": [
-            "1. 建立档案",
-            "2. 更新记录",
-            "3. 归档保存"
-          ],
-          "monthly_executions": 60,
-          "success_count": 60,
+          "name": "入学申请",
+          "monthly_executions": 0,
+          "success_count": 0,
           "fail_count": 0
         },
         {
-          "id": "ADMIT-003",
-          "name": "等级晋升",
-          "description": "处理等级晋升",
-          "steps": [
-            "1. 审核条件",
-            "2. 评估成绩",
-            "3. 批准晋升",
-            "4. 更新档案"
-          ],
-          "monthly_executions": 12,
-          "success_count": 10,
-          "fail_count": 2
+          "id": "ADMIT-002",
+          "name": "邀请码管理",
+          "monthly_executions": 0,
+          "success_count": 0,
+          "fail_count": 0
         }
       ]
     },
@@ -289,7 +118,7 @@
       "message": "在读0名 | 选课26770次 | 家长绑定0个",
       "icon": "👥",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "跟踪0名在读学员",
         "选课管理26770次",
@@ -304,43 +133,9 @@
       "sops": [
         {
           "id": "STU-001",
-          "name": "学员日常管理",
-          "description": "日常学员管理",
-          "steps": [
-            "1. 考勤记录",
-            "2. 学习跟踪",
-            "3. 问题处理"
-          ],
-          "monthly_executions": 200,
-          "success_count": 195,
-          "fail_count": 5
-        },
-        {
-          "id": "STU-002",
-          "name": "学习预警",
-          "description": "预警干预帮扶",
-          "steps": [
-            "1. 监测异常",
-            "2. 发出预警",
-            "3. 制定帮扶方案",
-            "4. 跟踪改善"
-          ],
-          "monthly_executions": 15,
-          "success_count": 12,
-          "fail_count": 3
-        },
-        {
-          "id": "STU-003",
-          "name": "奖惩管理",
-          "description": "处理奖惩事项",
-          "steps": [
-            "1. 收集信息",
-            "2. 评估情况",
-            "3. 做出决定",
-            "4. 执行通知"
-          ],
-          "monthly_executions": 8,
-          "success_count": 8,
+          "name": "作品管理",
+          "monthly_executions": 0,
+          "success_count": 0,
           "fail_count": 0
         }
       ]
@@ -350,7 +145,7 @@
       "message": "考核系统就绪",
       "icon": "📝",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "考核系统待命",
         "题库建设中",
@@ -364,44 +159,17 @@
       "sops": [
         {
           "id": "EXAM-001",
-          "name": "能力考核组织",
-          "description": "组织考核评估",
-          "steps": [
-            "1. 制定考核方案",
-            "2. 组织考核",
-            "3. 评分",
-            "4. 公布结果"
-          ],
-          "monthly_executions": 40,
-          "success_count": 38,
-          "fail_count": 2
-        },
-        {
-          "id": "EXAM-002",
-          "name": "成绩评定",
-          "description": "评定学员成绩",
-          "steps": [
-            "1. 收集成绩",
-            "2. 综合评定",
-            "3. 录入系统"
-          ],
-          "monthly_executions": 40,
-          "success_count": 40,
+          "name": "能力评估",
+          "monthly_executions": 0,
+          "success_count": 0,
           "fail_count": 0
         },
         {
-          "id": "EXAM-003",
-          "name": "认证考试",
-          "description": "处理认证考试",
-          "steps": [
-            "1. 审核资格",
-            "2. 安排考试",
-            "3. 评分认证",
-            "4. 颁发证书"
-          ],
-          "monthly_executions": 10,
-          "success_count": 9,
-          "fail_count": 1
+          "id": "EXAM-002",
+          "name": "证书颁发",
+          "monthly_executions": 0,
+          "success_count": 0,
+          "fail_count": 0
         }
       ]
     },
@@ -410,7 +178,7 @@
       "message": "无异常",
       "icon": "⚖️",
       "sop_count": 2,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "日常巡查",
         "违纪处理流程维护",
@@ -420,36 +188,6 @@
       "achievements": [
         "违纪处理流程标准化",
         "申诉通道畅通"
-      ],
-      "sops": [
-        {
-          "id": "DISC-001",
-          "name": "违纪处理",
-          "description": "处理违纪行为",
-          "steps": [
-            "1. 接收举报",
-            "2. 调查核实",
-            "3. 做出处分",
-            "4. 执行通知"
-          ],
-          "monthly_executions": 2,
-          "success_count": 2,
-          "fail_count": 0
-        },
-        {
-          "id": "DISC-002",
-          "name": "学员申诉",
-          "description": "处理学员申诉",
-          "steps": [
-            "1. 接收申诉",
-            "2. 复核调查",
-            "3. 做出裁定",
-            "4. 通知结果"
-          ],
-          "monthly_executions": 1,
-          "success_count": 1,
-          "fail_count": 0
-        }
       ]
     },
     "实践教学中心": {
@@ -457,7 +195,7 @@
       "message": "实训平台正常 ✅",
       "icon": "🔧",
       "sop_count": 3,
-      "updated_at": "2026-03-14T23:59:11",
+      "updated_at": "2026-03-15T01:18:11",
       "work_plan": [
         "实训平台维护",
         "作品集管理",
@@ -471,44 +209,10 @@
       "sops": [
         {
           "id": "PRAC-001",
-          "name": "实践任务",
-          "description": "布置实践任务",
-          "steps": [
-            "1. 设计任务",
-            "2. 发布任务",
-            "3. 跟踪进度",
-            "4. 验收成果"
-          ],
-          "monthly_executions": 30,
-          "success_count": 27,
-          "fail_count": 3
-        },
-        {
-          "id": "PRAC-002",
-          "name": "作品集管理",
-          "description": "管理学员作品",
-          "steps": [
-            "1. 收集作品",
-            "2. 评审打分",
-            "3. 归档展示"
-          ],
-          "monthly_executions": 20,
-          "success_count": 19,
-          "fail_count": 1
-        },
-        {
-          "id": "PRAC-003",
-          "name": "就业推荐",
-          "description": "推荐学员就业",
-          "steps": [
-            "1. 评估能力",
-            "2. 匹配岗位",
-            "3. 推荐面试",
-            "4. 跟踪结果"
-          ],
-          "monthly_executions": 5,
-          "success_count": 4,
-          "fail_count": 1
+          "name": "家长绑定",
+          "monthly_executions": 0,
+          "success_count": 0,
+          "fail_count": 0
         }
       ]
     }
@@ -565,33 +269,33 @@
   },
   "recent_logs": [
     {
-      "time": "2026-03-14 23:59",
+      "time": "2026-03-15 01:18",
+      "dept": "IT部门",
+      "action": "0555626 feat: 基础技能包分组展示 + 新课上线入口"
+    },
+    {
+      "time": "2026-03-15 01:18",
       "dept": "IT部门",
       "action": "83c9dd1 refactor: 去掉所有学习时间描述"
     },
     {
-      "time": "2026-03-14 23:59",
+      "time": "2026-03-15 01:18",
       "dept": "IT部门",
       "action": "30384d2 feat: 校务委员会事件仪表盘 + Hook 接入 SOP"
     },
     {
-      "time": "2026-03-14 23:59",
+      "time": "2026-03-15 01:18",
       "dept": "IT部门",
       "action": "9938b3d feat: 事件 Hook 系统 Phase 1-3"
     },
     {
-      "time": "2026-03-14 23:59",
+      "time": "2026-03-15 01:18",
       "dept": "IT部门",
       "action": "451a9a3 feat: 家长登录系统 + 基础课包扩充 + 校务委员会v2 + 首页优化"
-    },
-    {
-      "time": "2026-03-14 23:59",
-      "dept": "IT部门",
-      "action": "b4af873 feat: 课程体系职业化改造 + 校务委员会展示系统 + 基础技能包SOP"
     }
   ],
   "_meta": {
-    "last_updated": "2026-03-14T23:59:11",
+    "last_updated": "2026-03-15T01:18:11",
     "data_sources": [
       "lobster.db",
       "SOP文件",

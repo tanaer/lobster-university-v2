@@ -109,10 +109,132 @@ def get_admission_issues():
     with open(path) as f:
         return sum(1 for l in f if l.strip() and not l.startswith('#'))
 
+def get_event_stats(db_path):
+    """从 events 表读取最近 30 天的真实统计数据"""
+    conn = sqlite3.connect(db_path, timeout=5)
+    c = conn.cursor()
+
+    # 计算 30 天前的时间戳（毫秒）
+    thirty_days_ago = int((time.time() - 30 * 24 * 3600) * 1000)
+
+    # 查询最近 30 天的事件统计
+    query = """
+        SELECT action, status, COUNT(*) as count
+        FROM events
+        WHERE timestamp > ?
+        GROUP BY action, status
+    """
+
+    results = c.execute(query, (thirty_days_ago,)).fetchall()
+    conn.close()
+
+    # 构建统计字典 {action: {success: count, fail: count}}
+    stats = {}
+    for action, status, count in results:
+        if action not in stats:
+            stats[action] = {'success': 0, 'fail': 0}
+        if status == 'ok':
+            stats[action]['success'] = count
+        else:
+            stats[action]['fail'] = count
+
+    return stats
+
+def generate_department_sops(event_stats):
+    """根据真实事件统计生成各部门的 SOP 数据"""
+
+    # SOP 与 action 的映射关系
+    sop_mappings = {
+        "校务委员会": [
+            {
+                "id": "COUNCIL-001",
+                "name": "教学标准制定",
+                "actions": ["council.decision"]
+            }
+        ],
+        "教务处": [
+            {
+                "id": "ACAD-001",
+                "name": "选课管理",
+                "actions": ["course.enroll"]
+            },
+            {
+                "id": "ACAD-002",
+                "name": "学习进度跟踪",
+                "actions": ["course.progress", "chapter.complete"]
+            }
+        ],
+        "招生办公室": [
+            {
+                "id": "ADMIT-001",
+                "name": "入学申请",
+                "actions": ["enrollment.create"]
+            },
+            {
+                "id": "ADMIT-002",
+                "name": "邀请码管理",
+                "actions": ["invite.generate"]
+            }
+        ],
+        "学生工作处": [
+            {
+                "id": "STU-001",
+                "name": "作品管理",
+                "actions": ["portfolio.submit"]
+            }
+        ],
+        "考试中心": [
+            {
+                "id": "EXAM-001",
+                "name": "能力评估",
+                "actions": ["assessment.submit"]
+            },
+            {
+                "id": "EXAM-002",
+                "name": "证书颁发",
+                "actions": ["cert.issue"]
+            }
+        ],
+        "实践教学中心": [
+            {
+                "id": "PRAC-001",
+                "name": "家长绑定",
+                "actions": ["parent.bind"]
+            }
+        ]
+    }
+
+    # 为每个部门生成 SOP 列表
+    department_sops = {}
+    for dept_name, sops in sop_mappings.items():
+        dept_sop_list = []
+        for sop in sops:
+            # 汇总该 SOP 对应的所有 actions 的统计数据
+            total_success = 0
+            total_fail = 0
+            for action in sop["actions"]:
+                if action in event_stats:
+                    total_success += event_stats[action]['success']
+                    total_fail += event_stats[action]['fail']
+
+            total_executions = total_success + total_fail
+
+            dept_sop_list.append({
+                "id": sop["id"],
+                "name": sop["name"],
+                "monthly_executions": total_executions,
+                "success_count": total_success,
+                "fail_count": total_fail
+            })
+
+        department_sops[dept_name] = dept_sop_list
+
+    return department_sops
+
 def build_real_state():
     now = datetime.now()
     now_str = now.strftime("%Y-%m-%dT%H:%M:%S")
-    
+
     stats = get_db_stats()
     sop_count, sop_files = count_sop_files()
     qa_pass = get_qa_result()
@@ -120,12 +242,10 @@ def build_real_state():
     jd_proposals = get_jd_proposals()
     admission_issues = get_admission_issues()
     git_logs = get_recent_git_logs()
-    
-    # 读取现有状态保留 SOP 详情
-    existing = {}
-    if os.path.exists(STATE_PATH):
-        with open(STATE_PATH) as f:
-            existing = json.load(f)
+
+    # 获取真实事件统计数据
+    event_stats = get_event_stats(DB_PATH)
+    department_sops = generate_department_sops(event_stats)
     
     departments = {}
     
@@ -138,7 +258,8 @@ def build_real_state():
         "updated_at": now_str,
         "work_plan": [f"管理{stats['career_paths']}条职业路径", f"监督{sop_count}个SOP执行", "季度战略规划"],
         "active_work": f"监督全校运营：{stats['total_courses']}门课程，{stats['total_students']}名学员",
-        "achievements": [f"职业路径{stats['career_paths']}条", f"SOP文件{sop_count}个", f"课程{stats['total_courses']}门"]
+        "achievements": [f"职业路径{stats['career_paths']}条", f"SOP文件{sop_count}个", f"课程{stats['total_courses']}门"],
+        "sops": department_sops.get("校务委员会", [])
     }
     
     # === 2. 教学质量监控中心 ===
@@ -168,7 +289,8 @@ def build_real_state():
         "updated_at": now_str,
         "work_plan": [f"JD扫描提案：{jd_proposals}条待研判", f"基础课包维护：{stats['base_courses']}门", "每30分钟扫描BOSS/X/小红书"],
         "active_work": f"管理{stats['total_courses']}门课程 | JD提案{jd_proposals}条 | 基础课包{stats['base_courses']}门",
-        "achievements": [f"课程总数{stats['total_courses']}门", f"基础课包{stats['base_courses']}门", f"JD提案{jd_proposals}条"]
+        "achievements": [f"课程总数{stats['total_courses']}门", f"基础课包{stats['base_courses']}门", f"JD提案{jd_proposals}条"],
+        "sops": department_sops.get("教务处", [])
     }
     
     # === 4. 招生办公室 ===
@@ -181,7 +303,8 @@ def build_real_state():
         "updated_at": now_str,
         "work_plan": [f"管理{stats['total_students']}名学员档案", f"邀请码系统：{stats['invite_codes_total']}个", "入学流程自动化"],
         "active_work": f"学员{stats['total_students']}名 | 邀请码{stats['invite_codes_total']}个 | 入学问题{admission_issues}个",
-        "achievements": [f"累计{stats['total_students']}名学员", f"邀请码{stats['invite_codes_total']}个", f"家长绑定{stats['parent_bindings']}个"]
+        "achievements": [f"累计{stats['total_students']}名学员", f"邀请码{stats['invite_codes_total']}个", f"家长绑定{stats['parent_bindings']}个"],
+        "sops": department_sops.get("招生办公室", [])
     }
     
     # === 5. 学生工作处 ===
@@ -193,7 +316,8 @@ def build_real_state():
         "updated_at": now_str,
         "work_plan": [f"跟踪{stats['active_students']}名在读学员", f"选课管理{stats['total_enrollments']}次", "学习预警"],
         "active_work": f"在读{stats['active_students']}名 | 选课{stats['total_enrollments']}次",
-        "achievements": [f"选课{stats['total_enrollments']}次", f"家长绑定{stats['parent_bindings']}个", "预警机制运行中"]
+        "achievements": [f"选课{stats['total_enrollments']}次", f"家长绑定{stats['parent_bindings']}个", "预警机制运行中"],
+        "sops": department_sops.get("学生工作处", [])
     }
     
     # === 6. 考试中心 ===
@@ -205,7 +329,8 @@ def build_real_state():
         "updated_at": now_str,
         "work_plan": ["考核系统待命", "题库建设中", "AI辅助评分规划"],
         "active_work": "考核系统待命中",
-        "achievements": ["三关考核五维评估体系已建立", "认证证书体系上线"]
+        "achievements": ["三关考核五维评估体系已建立", "认证证书体系上线"],
+        "sops": department_sops.get("考试中心", [])
     }
     
     # === 7. 纪检监察室 ===
@@ -230,16 +355,10 @@ def build_real_state():
         "updated_at": now_str,
         "work_plan": ["实训平台维护", "作品集管理", "就业推荐"],
         "active_work": f"Next.js服务：{'运行中 ✅' if nextjs_ok else '异常 ❌'}",
-        "achievements": [f"平台状态：{'正常' if nextjs_ok else '异常'}", "作品集管理上线"]
+        "achievements": [f"平台状态：{'正常' if nextjs_ok else '异常'}", "作品集管理上线"],
+        "sops": department_sops.get("实践教学中心", [])
     }
-    
-    # 保留 SOP 详情
-    for dept_name in departments:
-        if dept_name in existing.get("departments", {}):
-            old = existing["departments"][dept_name]
-            if "sops" in old:
-                departments[dept_name]["sops"] = old["sops"]
-    
+
     # 绩效：基于真实数据计算
     performance = {}
     for dept_name, dept in departments.items():
