@@ -1,0 +1,17 @@
+{
+  "departments": {
+    "校务委员会": {"status": "normal", "message": "运行正常", "sop_count": 3, "icon": "👑", "updated_at": "2026-03-14T17:00:00"},
+    "教学质量监控中心": {"status": "normal", "message": "课程质量验收通过", "sop_count": 6, "icon": "🔍", "updated_at": "2026-03-14T17:00:00"},
+    "教务处": {"status": "normal", "message": "226门课程在线", "sop_count": 3, "icon": "📚", "updated_at": "2026-03-14T17:00:00"},
+    "招生办公室": {"status": "normal", "message": "招生通道正常", "sop_count": 3, "icon": "🎓", "updated_at": "2026-03-14T17:00:00"},
+    "学生工作处": {"status": "normal", "message": "学员管理正常", "sop_count": 3, "icon": "👥", "updated_at": "2026-03-14T17:00:00"},
+    "考试中心": {"status": "normal", "message": "考核系统就绪", "sop_count": 3, "icon": "📝", "updated_at": "2026-03-14T17:00:00"},
+    "纪检监察室": {"status": "normal", "message": "无异常", "sop_count": 2, "icon": "⚖️", "updated_at": "2026-03-14T17:00:00"},
+    "实践教学中心": {"status": "normal", "message": "实训平台正常", "sop_count": 3, "icon": "🔧", "updated_at": "2026-03-14T17:00:00"}
+  },
+  "recent_logs": [
+    {"time": "2026-03-14 17:00", "dept": "教务处", "action": "课程质量验收通过，226门课程全部合格"},
+    {"time": "2026-03-14 16:30", "dept": "教务处", "action": "完成174门课程objectives修复"},
+    {"time": "2026-03-14 16:00", "dept": "教务处", "action": "新增自动化验收脚本 course-qa.sh"}
+  ]
+}

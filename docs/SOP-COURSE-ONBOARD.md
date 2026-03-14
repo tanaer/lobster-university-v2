@@ -61,12 +61,33 @@
 ### Step 4: 质量验收（质量部）
 
 验收清单：
-- [ ] name 是中文
-- [ ] description 是中文，且说明了"学完能做什么"
+- [ ] name 是中文（不允许英文课程名）
+- [ ] description 是中文，且说明了"学完能做什么"（不允许英文描述）
+- [ ] objectives 是中文，且每条都是具体的技术能力点（不允许"掌握XXX的核心方法论"等模板化描述）
+- [ ] objectives 不包含英文术语（CSS/API/SQL等专有名词除外）
 - [ ] 每个 lesson 的 description 是具体的任务描述，不是模板
 - [ ] practice 类型的 lesson 有明确的实操任务和交付物
 - [ ] assess 类型的 lesson 有明确的考核标准和交付物
 - [ ] 至少 4 个 lessons（2学 + 1练 + 1考）
+
+**禁止上架的 objectives 示例**：
+- ❌ "掌握XXX的核心方法论和工作框架"
+- ❌ "能独立完成XXX的核心工作任务"
+- ❌ "掌握Foundation-First Approach"（英文未翻译）
+
+**合格的 objectives 示例**：
+- ✅ "能识别AI生成中的6类系统性偏见：克隆面孔、乱码符号、英雄符号构图"
+- ✅ "掌握反偏见提示词架构：主体-动作-环境-镜头-负面约束五段式结构"
+- ✅ "理解提示词五层架构：主体描述、环境设定、光线规格、技术参数、风格美学"
+
+### Step 4.5: 自动化验收脚本
+
+每次上架前必须运行验收脚本：
+```bash
+bash /root/.openclaw/workspace/lobster-university/scripts/course-qa.sh
+```
+
+脚本检查所有 published=1 的课程是否符合质量标准。不通过则不允许上架。
 
 ### Step 5: 上架
 
@@ -135,6 +156,7 @@ JSON 格式，包含 name, description, lessons 字段
 | 日期 | 问题 | 根因 | 修复 |
 |------|------|------|------|
 | 2026-03-14 | 120门新课程英文未翻译、练考敷衍 | 脚本批量生成，未经教授分析 | 建立本 SOP |
+| 2026-03-14 | objectives 模板化、含英文 | SOP 验收清单缺少 objectives 检查项，无自动化验收 | 新增 objectives 验收标准 + course-qa.sh 自动化脚本 |
 | 2026-03-13 | 课程质量参差不齐 | 无统一质量标准 | 制定课程设计原则 |
 
 ---
