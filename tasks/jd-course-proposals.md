@@ -370,3 +370,84 @@
 - 🆕 **Agent 行为模拟测试** — ArkSim 刚出现，属于早期信号，建议持续观察1-2轮再决定是否立项
 - 🆕 **多模态Agent** — 行业共识已形成但教程稀缺，先发优势窗口期约3-6个月
 
+---
+
+## 2026-03-15 00:00 | 信息源: X/Twitter AI Agent 趋势（第6轮扫描）
+
+### 搜集摘要
+
+**X/Twitter 热帖分析（关键词：AI agent workflow automation 2026）：**
+
+1. **Forbes 2026 预测：40% 企业应用将嵌入任务专用 Agent**
+   - Rohan Paul 转发：每个员工将拥有专属 AI 助手，覆盖 HR、排程、预测、库存、通信
+   - 职业晋升将偏向「能驾驭 Agent 的人」而非纯技术人员
+   - **信号：Agent 使用能力正在成为通用职场技能，不再局限于开发者**
+
+2. **Karpathy AgentHub — 多 Agent 共享 Git DAG 协作**
+   - 2026年3月9日发布，Agent 通过共享 commit graph + message board 协作
+   - 不走传统 GitHub PR 流程，而是 Agent 原生的协作范式
+   - **信号：Agent 协作正在脱离人类工作流模式，形成 Agent 原生范式**
+
+3. **一人 AI 公司已成现实**
+   - Shubham Saboo：6 个 AI Agent + 20 个 cron job + 0 人类员工
+   - 每个角色是一个文件夹，每个 JD 是一个 .md 文件
+   - 无 standup、无 Slack、无 payroll，一台 Mac 跑全公司
+   - **信号：Solo AI Company 从概念变为可复制的实践模式**
+
+4. **Google Cloud 2026 五大 Agent 趋势**
+   - Agentic workflow 成为核心业务流程
+   - Agent 将带来五星级用户体验
+   - **信号：云厂商全面押注 Agent 工作流**
+
+5. **OpenAI Agent Builder — 多步自动化工具**
+   - OpenAI 正在开发 workflow automation 工具和个人 AI 设备
+   - 目标：控制与技术交互的用户界面
+   - **信号：Agent 平台之争从模型层延伸到工作流编排层**
+
+### 现有课程覆盖 vs 新发现
+
+| 趋势方向 | 现有覆盖 | 本轮新发现 |
+|---------|---------|-----------|
+| Agent 作为通用职场技能 | 基础课程包（偏技术） | ❌ 缺面向非技术职场人的 Agent 素养课 |
+| Agent 原生协作范式（AgentHub） | 多 Agent 协作协议（偏传统） | ❌ 缺 Agent 原生协作模式（共享 DAG、非 PR 流程） |
+| Solo AI Company | 无 | 第5轮已提案，本轮再次验证 ✅ |
+| Agent 平台选型（OpenAI/Google/Anthropic） | 无 | ❌ 缺跨平台 Agent 工具选型课 |
+
+### 新增课程提案
+
+| 日期 | 信息源 | 岗位/趋势 | 薪资/热度 | 所需技能 | 推荐课程组合 | 缺口课程 |
+|------|--------|-----------|-----------|----------|-------------|----------|
+| 2026-03-15 | X/Forbes 2026 | 「AI Agent 素养」通用职场技能 | 🔥🔥🔥🔥🔥（40% 企业应用嵌入 Agent） | Agent 基本概念、Prompt 编写、工作流识别、Agent 工具使用、人机协作模式 | 基础课程包 + Prompt Engineering 系统课 | ⚠️ **职场 AI Agent 素养课：非技术人员的 Agent 驾驭指南**（面向 HR/财务/运营/PM，从「什么是 Agent」到「用 Agent 提效 3 倍」，零代码门槛） |
+| 2026-03-15 | X/Karpathy AgentHub | Agent 原生协作架构师 | 🔥🔥🔥（前沿但影响深远） | Git DAG 原理、Agent 通信协议、共享状态管理、冲突解决策略 | 多 Agent 协作协议 + Git 工作流助手 | ⚠️ **Agent 原生协作模式：从 PR 到 DAG**（Karpathy AgentHub 范式解析，Agent 如何通过共享 commit graph 协作，vs 传统 GitHub 工作流的本质区别） |
+| 2026-03-15 | X/OpenAI+Google | Agent 平台工程师 | 🔥🔥🔥（平台之争白热化） | OpenAI Agent Builder、Google Vertex AI Agent、Anthropic Claude Agent、平台选型决策框架 | Agentic 工作流设计 + Agent 编排与调度 | ⚠️ **Agent 平台选型实战：OpenAI vs Google vs Anthropic vs 开源**（各平台 Agent 工具对比、适用场景、迁移成本、锁定风险评估） |
+
+### 课程体系组合机会
+
+1. **👔 「AI Agent 职场通识」认证路径**（紧迫度：极高）
+   - 路径：**新增：职场 AI Agent 素养课** → Prompt Engineering → 定时任务 → n8n 工作流自动化
+   - 理由：Forbes 预测 40% 企业应用嵌入 Agent，职场人需要系统化的 Agent 使用培训。这是龙虾大学扩大受众面的最大机会——从开发者扩展到全职场。
+   - 目标用户：HR、财务、运营、PM、市场、律师等非技术岗位
+
+2. **🤖 「Agent 原生开发」高级认证**（紧迫度：中）
+   - 路径：多 Agent 协作协议 → Agent 编排与调度 → **新增：Agent 原生协作模式** → **新增：Agent 平台选型实战**
+   - 理由：Agent 协作正在脱离人类工作流模式，Karpathy AgentHub 代表了下一代范式。适合已有 Agent 开发经验的高级开发者。
+
+### 交叉验证汇总（6轮累计）
+
+| 提案方向 | 出现轮次 | 累计验证次数 | 建议优先级 |
+|---------|---------|------------|-----------|
+| Agent 产品化/商业变现 | 第2、3轮 | 2次 | ⭐⭐⭐⭐⭐ 极高 |
+| Solo AI Company | 第5、6轮 | 2次 | ⭐⭐⭐⭐⭐ 极高 |
+| 非技术人员 Agent 课程 | 第1、6轮 | 2次 | ⭐⭐⭐⭐⭐ 极高 |
+| MCP + A2A 双协议 | 第4轮 | 1次 | ⭐⭐⭐⭐ 高 |
+| 全平台矩阵运营 | 第1、4轮 | 2次 | ⭐⭐⭐⭐ 高 |
+| LangGraph/CrewAI 专项 | 第3轮 | 1次 | ⭐⭐⭐⭐ 高 |
+| Agent 生产化与可靠性 | 第2轮 | 1次 | ⭐⭐⭐⭐ 高 |
+| Agent 行为模拟测试 | 第3、5轮 | 2次 | ⭐⭐⭐ 中 |
+| 推理模型应用实战 | 第2轮 | 1次 | ⭐⭐⭐ 中 |
+| Agentic CI/CD | 第5轮 | 1次 | ⭐⭐⭐ 中 |
+| 多模态 Agent | 第5轮 | 1次 | ⭐⭐⭐ 中 |
+| Agent 原生协作（AgentHub） | 第6轮 | 1次 | ⭐⭐⭐ 中（观察期） |
+| Agent 平台选型 | 第6轮 | 1次 | ⭐⭐⭐ 中 |
+| Agent 增长实验 | 第3轮 | 1次 | ⭐⭐ 低（观察期） |
+
