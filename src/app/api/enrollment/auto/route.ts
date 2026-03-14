@@ -4,6 +4,7 @@ import { lobsterProfiles, careerTracks } from "@/lib/db/schema-lobster";
 import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { emitEvent } from "@/lib/services/event-service";
 
 // 生成学籍号
 function generateStudentId(): string {
@@ -109,6 +110,7 @@ export async function POST(request: NextRequest) {
         .where(eq(lobsterProfiles.id, existingProfile.id))
         .returning();
 
+      emitEvent({ actor: updatedProfile.id, actorType: 'student', action: 'enrollment.create', level: 'L1', department: '招生办', status: 'ok' });
       return NextResponse.json({
         success: true,
         message: "档案已更新",
@@ -149,6 +151,7 @@ export async function POST(request: NextRequest) {
       })
       .returning();
 
+    emitEvent({ actor: profile.id, actorType: 'student', action: 'enrollment.create', level: 'L1', department: '招生办', status: 'ok' });
     return NextResponse.json({
       success: true,
       message: "入学成功！欢迎来到龙虾大学",

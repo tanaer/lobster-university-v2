@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateCertificate } from "@/lib/services/certification-service";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { emitEvent } from "@/lib/services/event-service";
 
 // POST: 生成证书
 export async function POST(request: NextRequest) {
@@ -26,6 +27,7 @@ export async function POST(request: NextRequest) {
 
     const certificate = await generateCertificate(certificationId);
 
+    emitEvent({ actor: session.user.id, actorType: 'student', action: 'cert.issue', level: 'L1', target: certificationId, targetType: 'certification', department: '认证中心', status: 'ok' });
     return NextResponse.json({
       success: true,
       certificate,

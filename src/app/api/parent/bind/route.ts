@@ -5,6 +5,7 @@ import { eq, and } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { nanoid } from "nanoid";
+import { emitEvent } from "@/lib/services/event-service";
 
 export async function POST(request: NextRequest) {
   try {
@@ -162,6 +163,7 @@ export async function POST(request: NextRequest) {
       })
       .where(eq(inviteCodes.id, invite.id));
 
+    emitEvent({ actor: userId, actorType: 'student', action: 'parent.bind', level: 'L1', target: student.id, targetType: 'student', department: '招生办', status: 'ok' });
     return NextResponse.json({
       success: true,
       student: {

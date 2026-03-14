@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { inviteCodes } from "@/lib/db/schema-lobster";
 import { nanoid } from "nanoid";
+import { emitEvent } from "@/lib/services/event-service";
 
 function generateCode(): string {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // 去掉容易混淆的 I/O/0/1
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
       expiresAt,
     });
 
+    emitEvent({ actor: studentId, actorType: 'student', action: 'invite.generate', level: 'L1', department: '招生办', status: 'ok' });
     return NextResponse.json({
       success: true,
       code,

@@ -9,6 +9,7 @@ import { lobsterProfiles } from "@/lib/db/schema-lobster";
 import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { emitEvent } from "@/lib/services/event-service";
 
 // 获取当前用户档案
 async function getCurrentProfile() {
@@ -99,6 +100,7 @@ export async function POST(request: NextRequest) {
       parseInt(level)
     );
 
+    emitEvent({ actor: profile.id, actorType: 'student', action: 'cert.issue', level: 'L1', target: certification.id, targetType: 'certification', department: '认证中心', status: 'ok', metadata: { trackId, level } });
     return NextResponse.json({
       success: true,
       certification,

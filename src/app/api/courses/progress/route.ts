@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { courseProgress, studentCourses, skillCourses } from "@/lib/db/schema-lobster";
 import { eq, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { emitEvent } from "@/lib/services/event-service";
 
 // POST /api/courses/progress - 更新课程进度
 export async function POST(request: NextRequest) {
@@ -98,6 +99,10 @@ export async function POST(request: NextRequest) {
       })
       .where(eq(studentCourses.id, studentCourseId));
     
+    emitEvent({ actor: profileId, actorType: 'student', action: 'course.progress', level: 'L2', target: studentCourseId, targetType: 'studentCourse', department: '教务处', status: 'ok', metadata: { progress: progressPercent, completedLessons: completedCount, totalLessons } });
+    if (status === 'completed') {
+      emitEvent({ actor: profileId, actorType: 'student', action: 'chapter.complete', level: 'L1', target: studentCourseId, targetType: 'studentCourse', department: '教务处', status: 'ok', metadata: { lessonIndex, lessonTitle } });
+    }
     return NextResponse.json({
       success: true,
       message: "进度更新成功",

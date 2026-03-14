@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { portfolios, lobsterProfiles } from "@/lib/db/schema-lobster";
 import { eq, desc } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { emitEvent } from "@/lib/services/event-service";
 
 // GET: 获取作品列表
 export async function GET(request: NextRequest) {
@@ -59,6 +60,7 @@ export async function POST(request: NextRequest) {
       })
       .where(eq(lobsterProfiles.id, profileId));
 
+    emitEvent({ actor: profileId, actorType: 'student', action: 'portfolio.submit', level: 'L1', target: portfolio.id, targetType: 'portfolio', department: '就业服务中心', status: 'ok' });
     return NextResponse.json({ success: true, portfolio });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || "提交作品失败" }, { status: 500 });

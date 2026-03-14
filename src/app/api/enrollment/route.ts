@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { enrollLobster } from "@/lib/services/lobster-service";
+import { emitEvent } from "@/lib/services/event-service";
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,6 +30,7 @@ export async function POST(request: NextRequest) {
       studyReminder: reminderTime,
     });
 
+    emitEvent({ actor: profile.id, actorType: 'student', action: 'enrollment.create', level: 'L1', department: '招生办', status: 'ok' });
     return NextResponse.json({
       success: true,
       profile: {

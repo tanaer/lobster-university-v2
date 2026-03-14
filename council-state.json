@@ -2,20 +2,20 @@
   "departments": {
     "校务委员会": {
       "status": "normal",
-      "message": "8大职业路径运行中，8条路径已发布",
+      "message": "8条职业路径 | 235门课程 | 19个SOP文件",
       "icon": "👑",
       "sop_count": 3,
-      "updated_at": "2026-03-14T21:39:05",
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "Q1: 完成8大职业路径课程体系建设",
-        "Q2: 引入企业合作实训项目",
-        "Q3: 建立毕业生就业跟踪机制"
+        "管理8条职业路径",
+        "监督19个SOP执行",
+        "季度战略规划"
       ],
-      "active_work": "监督235门课程运营，8条职业路径",
+      "active_work": "监督全校运营：235门课程，0名学员",
       "achievements": [
-        "课程总数达到235门",
-        "建立8条职业路径",
-        "建立绩效考核体系"
+        "职业路径8条",
+        "SOP文件19个",
+        "课程235门"
       ],
       "sops": [
         {
@@ -64,20 +64,20 @@
     },
     "教学质量监控中心": {
       "status": "normal",
-      "message": "课程质量全部达标",
+      "message": "质量验收通过 ✅",
       "icon": "🔍",
-      "sop_count": 11,
-      "updated_at": "2026-03-14T21:39:05",
+      "sop_count": 6,
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "持续监控235门课程质量",
-        "每月课程效果评估",
-        "季度SOP审查优化"
+        "监控235门课程质量",
+        "course-qa.sh 自动验收",
+        "季度SOP审查"
       ],
-      "active_work": "监控235门课程质量，模板化objectives: 0门",
+      "active_work": "质量验收通过 | 模板化:0 | lessons不足:0",
       "achievements": [
-        "235门课程通过质量验收",
-        "建立自动化验收脚本course-qa.sh",
-        "修复174门课程objectives质量问题"
+        "验收状态：✅通过",
+        "监控235门课程",
+        "自动化验收脚本运行中"
       ],
       "sops": [
         {
@@ -164,20 +164,20 @@
     },
     "教务处": {
       "status": "normal",
-      "message": "235门课程在线，30个分类",
+      "message": "235门课程 | 30个分类 | 基础课包16门",
       "icon": "📚",
-      "sop_count": 3,
-      "updated_at": "2026-03-14T21:39:05",
+      "sop_count": 4,
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "完善基础技能包课程",
-        "每月扩充新课程",
-        "优化选课推荐算法"
+        "JD扫描提案：41条待研判",
+        "基础课包维护：16门",
+        "每30分钟扫描BOSS/X/小红书"
       ],
-      "active_work": "管理235门课程，30个分类",
+      "active_work": "管理235门课程 | JD提案41条 | 基础课包16门",
       "achievements": [
-        "课程总数达到235门",
-        "完成课程体系职业化改造",
-        "建立基础技能包管理SOP"
+        "课程总数235门",
+        "基础课包16门",
+        "JD提案41条"
       ],
       "sops": [
         {
@@ -224,21 +224,21 @@
       ]
     },
     "招生办公室": {
-      "status": "normal",
-      "message": "累计0名学员，0名在读",
+      "status": "warning",
+      "message": "学员0名 | 在读0名 | 邀请码0个(已用0)",
       "icon": "🎓",
       "sop_count": 3,
-      "updated_at": "2026-03-14T21:39:05",
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "优化入学流程自动化",
-        "建立学员画像系统",
-        "拓展招生渠道"
+        "管理0名学员档案",
+        "邀请码系统：0个",
+        "入学流程自动化"
       ],
-      "active_work": "管理0名学员档案",
+      "active_work": "学员0名 | 邀请码0个 | 入学问题11个",
       "achievements": [
-        "累计招收0名学员",
-        "入学流程自动化",
-        "建立完整学籍管理体系"
+        "累计0名学员",
+        "邀请码0个",
+        "家长绑定0个"
       ],
       "sops": [
         {
@@ -286,20 +286,20 @@
     },
     "学生工作处": {
       "status": "normal",
-      "message": "0名在读学员管理正常",
+      "message": "在读0名 | 选课25757次 | 家长绑定0个",
       "icon": "👥",
       "sop_count": 3,
-      "updated_at": "2026-03-14T21:39:05",
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "建立学员成长档案",
-        "优化学习预警机制",
-        "开展学员满意度调查"
+        "跟踪0名在读学员",
+        "选课管理25757次",
+        "学习预警"
       ],
-      "active_work": "跟踪0名在读学员学习状态",
+      "active_work": "在读0名 | 选课25757次",
       "achievements": [
-        "建立家长沟通五步法",
-        "学习预警机制上线",
-        "奖惩管理体系完善"
+        "选课25757次",
+        "家长绑定0个",
+        "预警机制运行中"
       ],
       "sops": [
         {
@@ -350,16 +350,15 @@
       "message": "考核系统就绪",
       "icon": "📝",
       "sop_count": 3,
-      "updated_at": "2026-03-14T21:39:05",
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "开发自动化考核系统",
-        "建立题库管理平台",
-        "引入AI辅助评分"
+        "考核系统待命",
+        "题库建设中",
+        "AI辅助评分规划"
       ],
       "active_work": "考核系统待命中",
       "achievements": [
-        "建立三关考核五维评估体系",
-        "考核流程标准化",
+        "三关考核五维评估体系已建立",
         "认证证书体系上线"
       ],
       "sops": [
@@ -411,17 +410,16 @@
       "message": "无异常",
       "icon": "⚖️",
       "sop_count": 2,
-      "updated_at": "2026-03-14T21:39:05",
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "完善违纪处理流程",
-        "建立申诉快速通道",
-        "定期发布纪律通报"
+        "日常巡查",
+        "违纪处理流程维护",
+        "申诉通道维护"
       ],
       "active_work": "日常巡查，暂无违纪事件",
       "achievements": [
         "违纪处理流程标准化",
-        "申诉通道畅通",
-        "纪律处分体系完善"
+        "申诉通道畅通"
       ],
       "sops": [
         {
@@ -456,20 +454,19 @@
     },
     "实践教学中心": {
       "status": "normal",
-      "message": "实训平台正常",
+      "message": "实训平台正常 ✅",
       "icon": "🔧",
       "sop_count": 3,
-      "updated_at": "2026-03-14T21:39:05",
+      "updated_at": "2026-03-14T23:09:06",
       "work_plan": [
-        "扩充实训项目库",
-        "建立企业合作通道",
-        "开发作品展示平台"
+        "实训平台维护",
+        "作品集管理",
+        "就业推荐"
       ],
-      "active_work": "实训平台运行中",
+      "active_work": "Next.js服务：运行中 ✅",
       "achievements": [
-        "实训项目库建设中",
-        "作品集管理上线",
-        "就业推荐流程建立"
+        "平台状态：正常",
+        "作品集管理上线"
       ],
       "sops": [
         {
@@ -518,96 +515,105 @@
   },
   "performance": {
     "校务委员会": {
-      "score": 95,
-      "weekly_avg": 92,
-      "monthly_avg": 90,
+      "score": 100,
+      "weekly_avg": 100,
+      "monthly_avg": 100,
       "warnings": 0
     },
     "教学质量监控中心": {
-      "score": 98,
-      "weekly_avg": 95,
-      "monthly_avg": 93,
+      "score": 100,
+      "weekly_avg": 100,
+      "monthly_avg": 100,
       "warnings": 0
     },
     "教务处": {
-      "score": 96,
-      "weekly_avg": 94,
-      "monthly_avg": 92,
+      "score": 100,
+      "weekly_avg": 100,
+      "monthly_avg": 100,
       "warnings": 0
     },
     "招生办公室": {
-      "score": 90,
-      "weekly_avg": 88,
-      "monthly_avg": 87,
-      "warnings": 0
+      "score": 85,
+      "weekly_avg": 85,
+      "monthly_avg": 85,
+      "warnings": 1
     },
     "学生工作处": {
-      "score": 92,
-      "weekly_avg": 90,
-      "monthly_avg": 89,
+      "score": 100,
+      "weekly_avg": 100,
+      "monthly_avg": 100,
       "warnings": 0
     },
     "考试中心": {
-      "score": 94,
-      "weekly_avg": 91,
-      "monthly_avg": 90,
+      "score": 100,
+      "weekly_avg": 100,
+      "monthly_avg": 100,
       "warnings": 0
     },
     "纪检监察室": {
       "score": 100,
-      "weekly_avg": 98,
-      "monthly_avg": 97,
+      "weekly_avg": 100,
+      "monthly_avg": 100,
       "warnings": 0
     },
     "实践教学中心": {
-      "score": 88,
-      "weekly_avg": 86,
-      "monthly_avg": 85,
+      "score": 100,
+      "weekly_avg": 100,
+      "monthly_avg": 100,
       "warnings": 0
     }
   },
   "recent_logs": [
     {
-      "time": "2026-03-14 19:00",
-      "dept": "校务委员会",
-      "action": "审批通过爆款自媒体文案写作课程"
+      "time": "2026-03-14 23:09",
+      "dept": "IT部门",
+      "action": "451a9a3 feat: 家长登录系统 + 基础课包扩充 + 校务委员会v2 + 首页优化"
     },
     {
-      "time": "2026-03-14 18:30",
-      "dept": "教务处",
-      "action": "首页组织架构样式优化完成"
+      "time": "2026-03-14 23:09",
+      "dept": "IT部门",
+      "action": "b4af873 feat: 课程体系职业化改造 + 校务委员会展示系统 + 基础技能包SOP"
     },
     {
-      "time": "2026-03-14 17:00",
-      "dept": "教学质量监控中心",
-      "action": "226门课程质量验收全部通过"
+      "time": "2026-03-14 23:09",
+      "dept": "IT部门",
+      "action": "49ec4d4 feat: 225门课程全部完成中文化与学练考设计"
     },
     {
-      "time": "2026-03-14 16:30",
-      "dept": "教务处",
-      "action": "完成174门课程objectives修复"
+      "time": "2026-03-14 23:09",
+      "dept": "IT部门",
+      "action": "aa60a44 fix: 组织架构改为top-to-bottom树形图，去掉三省六部名称"
     },
     {
-      "time": "2026-03-14 16:00",
-      "dept": "教务处",
-      "action": "新增自动化验收脚本course-qa.sh"
+      "time": "2026-03-14 23:09",
+      "dept": "IT部门",
+      "action": "f296bb0 fix: mock学员打标 + 巡检脚本优化"
     }
   ],
   "_meta": {
-    "last_updated": "2026-03-14T21:39:05",
+    "last_updated": "2026-03-14T23:09:06",
+    "data_sources": [
+      "lobster.db",
+      "SOP文件",
+      "course-qa.sh",
+      "git log",
+      "系统进程",
+      "tasks/"
+    ],
+    "virtual_data": "无 — 全部真实数据",
     "db_stats": {
       "total_courses": 235,
       "total_categories": 30,
+      "base_courses": 16,
       "total_students": 0,
       "active_students": 0,
-      "total_enrollments": 23945,
+      "total_enrollments": 25757,
       "career_paths": 8,
-      "template_objectives": 0,
-      "few_lessons": 0
-    },
-    "system_health": {
-      "nextjs": true,
-      "db": true
+      "template_obj": 0,
+      "few_lessons": 0,
+      "invite_codes_total": 0,
+      "invite_codes_used": 0,
+      "parent_bindings": 0
     }
   }
 }

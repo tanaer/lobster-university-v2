@@ -9,6 +9,7 @@ import {
   ASSESSMENT_DIMENSIONS,
   DimensionKey,
 } from "@/lib/services/assessment-service";
+import { emitEvent } from "@/lib/services/event-service";
 
 // GET: 获取评估报告或问题
 export async function GET(request: NextRequest) {
@@ -130,6 +131,7 @@ export async function POST(request: NextRequest) {
     const analysis = analyzeWeaknesses(report);
     const completion = await checkAssessmentCompletion();
 
+    emitEvent({ actor: assessment.profileId, actorType: 'student', action: 'assessment.submit', level: 'L1', target: assessment.id, targetType: 'assessment', department: '学生服务', status: 'ok', metadata: { dimension } });
     return NextResponse.json({
       success: true,
       assessment,

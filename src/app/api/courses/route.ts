@@ -4,6 +4,7 @@ import { skillCourses, studentCourses, courseProgress } from "@/lib/db/schema-lo
 import { lobsterProfiles } from "@/lib/db/schema-lobster";
 import { eq, and, sql } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { emitEvent } from "@/lib/services/event-service";
 
 // 基于课程 ID 生成稳定的 mock 学习人数（不超过在读学员总数）
 function getMockEnrollCount(courseId: string, realCount: number, totalStudents: number): number {
@@ -126,6 +127,7 @@ export async function POST(request: NextRequest) {
       .set({ enrollCount: (course[0].enrollCount || 0) + 1 })
       .where(eq(skillCourses.id, courseId));
     
+    emitEvent({ actor: profileId, actorType: 'student', action: 'course.enroll', level: 'L1', target: courseId, targetType: 'course', department: '教务处', status: 'ok' });
     return NextResponse.json({
       success: true,
       message: "报名成功",
