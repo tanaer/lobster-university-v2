@@ -38,6 +38,11 @@ FEW_LESSONS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM skill_courses WHERE published 
 echo "lessons < 4: $FEW_LESSONS 门"
 [ "$FEW_LESSONS" -gt 0 ] && ERRORS+=("QA-006: ${FEW_LESSONS}门课程 lessons 少于4个")
 
+# 7. lessons 格式错误（字符串数组而非对象数组，缺少 title 字段）
+BAD_FORMAT=$(sqlite3 "$DB" "SELECT COUNT(*) FROM skill_courses WHERE published = 1 AND lessons IS NOT NULL AND lessons != '' AND lessons != '[]' AND lessons NOT LIKE '%title%';")
+echo "lessons 格式错误: $BAD_FORMAT 门"
+[ "$BAD_FORMAT" -gt 0 ] && ERRORS+=("QA-007: ${BAD_FORMAT}门课程 lessons 格式错误（缺少title/duration/type字段）")
+
 # 汇总
 echo ""
 echo "================================"
