@@ -190,6 +190,44 @@ export const streakRecords = sqliteTable("streak_records", {
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+// 职业方向表（最大分类）
+export const careerDirections = sqliteTable("career_directions", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  code: text("code").notNull().unique(),
+  description: text("description").notNull(),
+  icon: text("icon"),
+  coverImage: text("cover_image"),
+  bundleCount: integer("bundle_count").default(0),
+  courseCount: integer("course_count").default(0),
+  order: integer("order").default(0),
+  published: integer("published", { mode: "boolean" }).default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+// 课程体系表（职业方向下的工作流组合）
+export const courseBundles = sqliteTable("course_bundles", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  code: text("code").notNull().unique(),
+  description: text("description").notNull(),
+  careerDirectionId: text("career_direction_id").references(() => careerDirections.id),
+  useCase: text("use_case"),
+  quickStart: text("quick_start"),
+  steps: text("steps"),
+  troubleshooting: text("troubleshooting"),
+  successCriteria: text("success_criteria"),
+  securityAudit: text("security_audit"),
+  sourceUrl: text("source_url"),
+  sourceType: text("source_type"),
+  courseCount: integer("course_count").default(0),
+  order: integer("order").default(0),
+  published: integer("published", { mode: "boolean" }).default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 // 技能课程表
 export const skillCourses = sqliteTable("skill_courses", {
   id: text("id").primaryKey(),
@@ -216,6 +254,20 @@ export const skillCourses = sqliteTable("skill_courses", {
   // 统计
   enrollCount: integer("enroll_count").default(0),
   completionRate: integer("completion_rate").default(0),
+  
+  // 课程体系关联
+  bundleId: text("bundle_id").references(() => courseBundles.id),
+  
+  // 安全审查
+  securityAudit: text("security_audit"),
+  securityScore: integer("security_score"),
+  qualityScore: text("quality_score"),
+  
+  // 来源
+  sourceUrl: text("source_url"),
+  
+  // 热度
+  hotScore: integer("hot_score").default(0),
   
   order: integer("order").default(0),
   published: integer("published", { mode: "boolean" }).default(true),
