@@ -78,3 +78,48 @@
     <strong>输出：</strong>正式政策文件<br>
     <strong>时间：</strong>14 天内完成</p>
 </div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-COUNCIL-004</div>
+    <h3>课程提案教授研判流程</h3>
+    <table>
+        <tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>定时触发（每日 10:00 和 16:00）+ 提案累积 ≥ 5 条时</td></tr>
+        <tr><td><strong>策划</strong></td><td>校务委员会</td></tr>
+        <tr><td><strong>执行</strong></td><td>三名教授（市场/技术/教学）</td></tr>
+        <tr><td><strong>验收</strong></td><td>教学质量监控中心</td></tr>
+    </table>
+    <div class="info">
+        <h4>触发机制（Cron 自动触发）</h4>
+        <p><strong>Cron Job:</strong> professor-review-trigger</p>
+        <p><strong>触发时间:</strong> 每日 10:00 和 16:00（Asia/Shanghai）</p>
+        <p><strong>数据来源:</strong> tasks/jd-course-proposals.md 中标记为「缺口课程」的提案</p>
+        <p><strong>每次处理:</strong> 最多 5 个提案，优先最新</p>
+    </div>
+    <h4>三名教授评审维度</h4>
+    <table>
+        <tr><th>教授</th><th>专长</th><th>评审维度</th><th>评分标准</th></tr>
+        <tr><td>教授A</td><td>市场趋势</td><td>市场需求 + 差异化</td><td>1-10分</td></tr>
+        <tr><td>教授B</td><td>技术深度</td><td>课程匹配度 + 技术可行性</td><td>1-10分</td></tr>
+        <tr><td>教授C</td><td>教学设计</td><td>学员可达性 + 学习路径合理性</td><td>1-10分</td></tr>
+    </table>
+    <h4>研判决策标准</h4>
+    <table>
+        <tr><th>平均分</th><th>决策</th><th>后续动作</th></tr>
+        <tr><td>≥ 7 分</td><td>✅ 通过</td><td>自动上线：插入数据库 → course-qa.sh 验收</td></tr>
+        <tr><td>5-7 分</td><td>⚠️ 修改</td><td>给出修改建议，下次重新评审</td></tr>
+        <tr><td>< 5 分</td><td>❌ 驳回</td><td>说明原因，归档</td></tr>
+    </table>
+    <div class="steps"><h4>完整流程</h4><ol>
+        <li><strong>检查提案</strong>：读取 jd-course-proposals.md 中的缺口课程</li>
+        <li><strong>三教授评审</strong>：分别从市场/技术/教学三个维度评分</li>
+        <li><strong>研判决策</strong>：根据平均分决定通过/修改/驳回</li>
+        <li><strong>记录结果</strong>：写入 tasks/professor-review-results.md</li>
+        <li><strong>自动上线</strong>：通过的提案自动生成课程并插入数据库</li>
+        <li><strong>质量验收</strong>：运行 course-qa.sh 验收</li>
+        <li><strong>汇报校长</strong>：通报研判结果</li>
+    </ol></div>
+    <p><strong>输入：</strong>jd-course-proposals.md 中的缺口课程提案<br>
+    <strong>输出：</strong>professor-review-results.md + 新上线课程<br>
+    <strong>时间：</strong>每次研判 30 分钟内完成</p>
+</div>

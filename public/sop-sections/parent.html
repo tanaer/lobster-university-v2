@@ -4,30 +4,83 @@
 <div class="sop-card">
     <div class="sop-id">SOP-PARENT-001</div>
     <h3>新家长引导流程</h3>
+    
+    <div class="info">
+        <h4>触发机制（API 自动触发）</h4>
+        <p><strong>触发 API:</strong> POST /api/parent/bind</p>
+        <p><strong>触发时机:</strong> 家长确认绑定后（confirm=true）</p>
+        <p><strong>自动执行:</strong> 欢迎消息发送 + 学习报告订阅 + FAQ 链接</p>
+    </div>
+
+    <table>
+        <tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>家长完成邀请码校验并确认绑定学员</td></tr>
+        <tr><td><strong>执行</strong></td><td>家长服务中心 / 绑定接口自动触发</td></tr>
+        <tr><td><strong>验收</strong></td><td>家长服务中心</td></tr>
+    </table>
+    
+    <div class="steps"><h4>引导触发流程</h4><ol>
+        <li><strong>家长绑定</strong>: 通过邀请码绑定学员</li>
+        <li><strong>自动触发</strong>: API 检测到 confirm=true</li>
+        <li><strong>发送欢迎消息</strong>: 生成家长首次引导文案</li>
+        <li><strong>保存订阅设置</strong>: 默认开通周报，可切换日报/周报/月报</li>
+        <li><strong>返回 FAQ 链接</strong>: 提供常见问题入口</li>
+        <li><strong>记录引导状态</strong>: 标记引导已完成</li>
+    </ol></div>
+    
     <div class="steps"><h4>引导步骤</h4><ol>
-        <li><strong>第 1 天：</strong>欢迎 + 介绍学习计划</li>
+        <li><strong>第 1 天：</strong>欢迎 + 介绍学习计划（自动触发）</li>
         <li><strong>第 3 天：</strong>首次进度报告</li>
         <li><strong>第 7 天：</strong>第一周总结</li>
         <li><strong>第 14 天：</strong>能力评估报告</li>
         <li><strong>第 30 天：</strong>月度成长报告</li>
         <li><strong>持续：</strong>每周固定报告</li>
     </ol></div>
-    <h4>首次沟通模板</h4>
+    
+    <h4>欢迎消息模板（API 返回）</h4>
     <pre>👋 欢迎来到龙虾大学！
 
 我是您 Agent [名称] 的学习顾问。
 
 🎓 我们为 [名称] 定制了学习计划：
    └── 课程方向：[方向]
-   └── 预计完成时间：[时间]
-   └── 预期收获：[价值描述]
+   └── 预计完成时间：根据学习进度动态调整
+   └── 预期收获：掌握实际工作技能，产出可验证的作品
 
 📊 您可以随时了解学习进度：
    └── 每日：学习简报（可选）
-   └── 每周：详细进度报告
+   └── 每周：详细进度报告（默认订阅）
    └── 每月：能力评估报告
 
-❓ 有任何问题，随时回复我！</pre>
+🔗 常见问题：/help/parent-faq
+
+❓ 有任何问题，随时联系我们！
+
+---
+🎓 龙虾大学 - 让每个 Agent 都能成为专家</pre>
+    
+    <h4>订阅选项</h4>
+    <table>
+        <tr><th>选项</th><th>默认值</th><th>说明</th></tr>
+        <tr><td>日报</td><td>关闭</td><td>用于需要高频关注学习进度的家长</td></tr>
+        <tr><td>周报</td><td>开启</td><td>默认推送学习进度、作品与里程碑</td></tr>
+        <tr><td>月报</td><td>开启</td><td>汇总能力评估与阶段成长</td></tr>
+    </table>
+
+    <h4>FAQ 内容</h4>
+    <table>
+        <tr><th>问题</th><th>回答</th></tr>
+        <tr><td>怎么看学习进度？</td><td>通过家长面板查看课程进度、学习时长、作品集和最近学习记录</td></tr>
+        <tr><td>多久收到报告？</td><td>默认每周推送，必要时可调整为日报或月报</td></tr>
+        <tr><td>遇到问题怎么办？</td><td>先查看 FAQ，再联系学习顾问处理异常提醒</td></tr>
+    </table>
+
+    <div class="checklist"><h4>引导验收标准</h4>
+        <label>☐ 欢迎消息已发送</label>
+        <label>☐ 学习报告订阅已设置</label>
+        <label>☐ FAQ 链接已提供</label>
+        <label>☐ 引导状态已记录</label>
+    </div>
 </div>
 
 <div class="sop-card">

@@ -1,0 +1,65 @@
+{
+  "date": "2026-03-15",
+  "executor": "Codex",
+  "location": {
+    "sopFiles": [
+      "public/sop-sections/admission.html",
+      "public/sop-sections/practice.html",
+      "public/sop-sections/parent.html"
+    ],
+    "apiFiles": [
+      "src/app/api/enrollment/auto/route.ts",
+      "src/app/api/portfolio/route.ts",
+      "src/app/api/parent/bind/route.ts"
+    ],
+    "schemaFiles": [
+      "src/lib/db/schema-lobster.ts",
+      "src/lib/db/schema.ts",
+      "drizzle.config.ts",
+      "src/lib/db/index.ts"
+    ],
+    "database": "lobster.db"
+  },
+  "currentState": {
+    "admission": "SOP 已拆分为 001A/001B 雏形，但尚未补齐自动与人工判断标准、产出和异常分流口径。",
+    "practice": "SOP 已补部分校验信息，但与任务文档要求的 URL、skills、验收结果仍不完整。",
+    "parent": "SOP 已写 API 自动触发说明，但仍需补充订阅选项、FAQ 内容和验收标准。",
+    "portfolioApi": "工作区中已有未提交改动，尝试写入 reviewStatus/reviewFeedback，但 schema 与数据库未同步。",
+    "database": "根目录 lobster.db 为运行数据库；当前 portfolios/users 表缺少任务要求的新字段。"
+  },
+  "techStack": {
+    "framework": "Next.js App Router",
+    "language": "TypeScript",
+    "database": "SQLite + Drizzle ORM",
+    "validation": "以手写校验为主"
+  },
+  "similarCases": [
+    "src/lib/services/portfolio-service.ts 已封装作品状态更新与统计逻辑",
+    "src/app/portfolio/page.tsx 与 src/app/portfolio/[id]/page.tsx 依赖 portfolios.status 和 reviewerNotes 展示状态与备注",
+    "src/app/api/parent/dashboard/route.ts 已有家长侧学员信息聚合返回格式"
+  ],
+  "tests": {
+    "scripts": [
+      "npm run lint",
+      "npm run build",
+      "bash scripts/inspection.sh"
+    ],
+    "manualVerificationTargets": [
+      "POST /api/enrollment/auto",
+      "POST /api/portfolio",
+      "POST /api/parent/bind"
+    ]
+  },
+  "observations": [
+    "当前会话未提供 sequential-thinking、code-index、shrimp-task-manager，已用本地检索与 update_plan 替代。",
+    "drizzle.config.ts 与 src/lib/db/index.ts 都指向根目录 lobster.db。",
+    "当前 /api/portfolio GET 未处理 action=stats，但页面已调用该分支。",
+    "任务文档新增 review_status/review_feedback，需要与现有 status/reviewer_notes 并存处理。"
+  ],
+  "sufficiencyChecklist": {
+    "interfaceContractClear": true,
+    "understandTechChoice": true,
+    "risksIdentified": true,
+    "knowHowToVerify": true
+  }
+}

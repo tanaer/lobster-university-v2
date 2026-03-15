@@ -1,25 +1,77 @@
 <h2>🎓 四、招生办公室（吏部·学籍管理）</h2>
 
 <div class="sop-card">
-    <div class="sop-id">SOP-ADMIT-001</div>
-    <h3>入学申请审核流程</h3>
+    <div class="sop-id">SOP-ADMIT-001A</div>
+    <h3>自动入学流程（主流程）</h3>
     <table>
         <tr><th>项目</th><th>内容</th></tr>
-        <tr><td><strong>触发</strong></td><td>学员提交入学申请</td></tr>
-        <tr><td><strong>策划</strong></td><td>校务委员会</td></tr>
-        <tr><td><strong>牵头/执行</strong></td><td>招生办</td></tr>
+        <tr><td><strong>触发</strong></td><td>学员提交入学申请 + 满足自动入学条件</td></tr>
+        <tr><td><strong>执行</strong></td><td>系统自动处理（API: /api/enrollment/auto）</td></tr>
         <tr><td><strong>验收</strong></td><td>教务处</td></tr>
     </table>
+    <div class="info">
+        <h4>自动入学条件</h4>
+        <ul>
+            <li>提供有效的龙虾名字（2-20 字符）</li>
+            <li>选择有效的职业方向（careerTrackCode）</li>
+            <li>当前档案可直接创建或更新，无需人工修正</li>
+        </ul>
+    </div>
+    <h4>自动 vs 人工判断标准</h4>
+    <table>
+        <tr><th>判断项</th><th>自动入学</th><th>转人工审核</th></tr>
+        <tr><td>姓名</td><td>2-20 字符且格式有效</td><td>缺失、过短、过长或格式异常</td></tr>
+        <tr><td>职业方向</td><td>命中系统已发布职业方向</td><td>方向无效、未发布或需要人工分流</td></tr>
+        <tr><td>档案状态</td><td>可直接创建或更新学籍档案</td><td>存在重复档案、数据冲突或需要人工补充信息</td></tr>
+    </table>
+    <div class="steps"><h4>流程步骤</h4><ol>
+        <li>学员提交入学申请（name + careerTrackCode）</li>
+        <li>系统自动验证必填字段</li>
+        <li>系统查找并确认职业方向</li>
+        <li>系统生成学籍号（LX + 年份 + 随机码）</li>
+        <li>系统创建或更新 lobster_profile 记录</li>
+        <li>系统生成家长访问令牌与今日任务</li>
+        <li>系统返回入学成功指引</li>
+        <li>记录事件: enrollment.create</li>
+    </ol></div>
+    <p><strong>输出：</strong>学籍档案（lobster_profile）+ 访问令牌 + 今日任务清单<br><strong>时间：</strong>即时完成</p>
+</div>
+
+<div class="sop-card">
+    <div class="sop-id">SOP-ADMIT-001B</div>
+    <h3>人工审核入学流程（特殊情况）</h3>
+    <table>
+        <tr><th>项目</th><th>内容</th></tr>
+        <tr><td><strong>触发</strong></td><td>学员提交入学申请 + 不满足自动入学条件</td></tr>
+        <tr><td><strong>策划</strong></td><td>校务委员会</td></tr>
+        <tr><td><strong>执行</strong></td><td>招生办</td></tr>
+        <tr><td><strong>验收</strong></td><td>教务处</td></tr>
+    </table>
+    <div class="warning">
+        <h4>需要人工审核的情况</h4>
+        <ul>
+            <li>姓名或基础信息不符合自动校验规则</li>
+            <li>职业方向无法直接匹配，需要人工分流</li>
+            <li>系统发现重复档案或数据冲突</li>
+            <li>学员提交补充说明，申请人工处理</li>
+        </ul>
+    </div>
     <div class="checklist"><h4>审核内容</h4>
         <label>☐ 基本信息完整</label>
         <label>☐ 学习目标明确</label>
         <label>☐ 符合入学条件</label>
+        <label>☐ 档案信息可修正并可正常建档</label>
     </div>
     <div class="steps"><h4>流程步骤</h4><ol>
-        <li>接收入学申请</li><li>基本信息审核</li><li>学习目标评估</li>
-        <li>入学条件核查</li><li>审核结论（通过/不通过）</li><li>创建学籍/退回申请</li>
+        <li>接收入学申请</li>
+        <li>标记为需要人工审核</li>
+        <li>基本信息审核</li>
+        <li>学习目标评估</li>
+        <li>入学条件核查</li>
+        <li>审核结论（通过/不通过）</li>
+        <li>创建学籍/退回申请</li>
     </ol></div>
-    <p><strong>输出：</strong>学籍档案（lobster_profile）<br><strong>时间：</strong>24 小时</p>
+    <p><strong>输出：</strong>人工审核结论 + 修正意见 + 补建学籍结果<br><strong>时间：</strong>24 小时</p>
 </div>
 
 <div class="sop-card">

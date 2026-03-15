@@ -6,6 +6,10 @@ import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { emitEvent } from "@/lib/services/event-service";
 
+function getErrorMessage(error: unknown, fallback: string) {
+  return error instanceof Error ? error.message : fallback;
+}
+
 // 生成学籍号
 function generateStudentId(): string {
   const year = new Date().getFullYear();
@@ -19,6 +23,11 @@ function generateAccessToken(): string {
 }
 
 // POST: 自动入学
+// SOP-REF: ADMIT-001A 自动入学流程
+// 说明: 本 API 实现自动入学，无需人工审核
+// 触发条件: 学员提交入学申请 + 满足自动入学条件
+// 自动入学条件: 提供有效的 name 和 careerTrackCode
+// 特殊情况: 如需人工审核，请使用 ADMIT-001B 流程
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -176,10 +185,10 @@ export async function POST(request: NextRequest) {
         "进行能力评估: /assessment",
       ],
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Auto enrollment error:", error);
     return NextResponse.json(
-      { error: error.message || "入学失败，请稍后重试" },
+      { error: getErrorMessage(error, "入学失败，请稍后重试") },
       { status: 500 }
     );
   }
@@ -218,7 +227,7 @@ export async function GET() {
 }
 
 // 生成今日任务
-function generateTodayTasks(track: any): string[] {
+function generateTodayTasks(track: { code: string }): string[] {
   const tasks: Record<string, string[]> = {
     "customer-support": [
       "学习《客户服务基础》第1章",

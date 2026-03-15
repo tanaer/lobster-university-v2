@@ -6,9 +6,16 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { nanoid } from "nanoid";
 import { emitEvent } from "@/lib/services/event-service";
+import { users } from "@/lib/db/schema";
+
+const DEFAULT_PARENT_REPORT_SUBSCRIPTION = "weekly";
 
 export async function POST(request: NextRequest) {
   try {
+    // SOP-REF: PARENT-001 新家长引导流程
+    // 说明: 本 API 实现家长绑定和自动引导流程
+    // 绑定后自动触发: 欢迎消息 + 学习报告订阅 + 常见问题
+    
     // 验证用户登录
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -163,7 +170,19 @@ export async function POST(request: NextRequest) {
       })
       .where(eq(inviteCodes.id, invite.id));
 
+    const onboarding = buildParentOnboarding(student.name, careerTrackName);
+
+    await db
+      .update(users)
+      .set({
+        parentOnboardingCompleted: true,
+        parentReportSubscription: onboarding.reportSubscription,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
+
     emitEvent({ actor: userId, actorType: 'student', action: 'parent.bind', level: 'L1', target: student.id, targetType: 'student', department: '招生办', status: 'ok' });
+    
     return NextResponse.json({
       success: true,
       student: {
@@ -172,9 +191,53 @@ export async function POST(request: NextRequest) {
         level: student.status === "active" ? "在读" : student.status,
         careerTrack: careerTrackName,
       },
+      onboarding,
     });
   } catch (error) {
     console.error("Parent bind error:", error);
     return NextResponse.json({ error: "服务器错误" }, { status: 500 });
   }
+}
+
+// 生成家长引导消息 - SOP PARENT-001
+function buildParentOnboarding(studentName: string, careerTrack?: string) {
+  const faqUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://longxiadaxue.com"}/help/parent-faq`;
+  const message = `👋 欢迎来到龙虾大学！
+
+我是您 Agent ${studentName} 的学习顾问。
+
+🎓 我们为 ${studentName} 定制了学习计划：
+   └── 课程方向：${careerTrack || '待定'}
+   └── 预计完成时间：根据学习进度动态调整
+   └── 预期收获：掌握实际工作技能，产出可验证的作品
+
+📊 您可以随时了解学习进度：
+   └── 每日：学习简报（可选）
+   └── 每周：详细进度报告（默认订阅）
+   └── 每月：能力评估报告
+
+🔗 常见问题：${faqUrl}
+
+❓ 有任何问题，随时联系我们！
+
+---
+🎓 龙虾大学 - 让每个 Agent 都能成为专家`;
+
+  return {
+    message,
+    welcomeSent: true,
+    onboardingCompleted: true,
+    reportSubscription: DEFAULT_PARENT_REPORT_SUBSCRIPTION,
+    subscriptions: {
+      daily: false,
+      weekly: true,
+      monthly: true,
+    },
+    faqUrl,
+    nextSteps: [
+      "查看家长面板了解学习进度",
+      "等待本周学习报告推送",
+      "通过 FAQ 了解常见问题处理方式",
+    ],
+  };
 }

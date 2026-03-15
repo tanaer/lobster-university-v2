@@ -108,9 +108,12 @@ export const portfolios = sqliteTable("portfolios", {
   // 内容
   content: text("content"), // 作品内容或描述
   fileUrl: text("file_url"), // 文件链接
-  
+  skills: text("skills").default("[]"), // JSON array - 关联技能或能力标签
+
   // 状态
   status: text("status").default("draft"), // draft/submitted/verified/rejected
+  reviewStatus: text("review_status").default("pending"), // draft/pending/approved/needs_revision/rejected
+  reviewFeedback: text("review_feedback"), // 自动或人工审核反馈
   reviewedAt: integer("reviewed_at", { mode: "timestamp" }),
   reviewerNotes: text("reviewer_notes"),
   

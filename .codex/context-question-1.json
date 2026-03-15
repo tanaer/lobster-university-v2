@@ -1,0 +1,21 @@
+{
+  "date": "2026-03-15",
+  "executor": "Codex",
+  "question": "如何实现作品审核字段而不破坏现有作品集页面？",
+  "priority": "high",
+  "known": [
+    "页面依赖 portfolios.status、reviewerNotes、reviewedAt。",
+    "任务文档要求新增 review_status、review_feedback。",
+    "当前工作区中的 portfolio API 已尝试写入新字段。"
+  ],
+  "decision": {
+    "approach": "保留现有 status/reviewerNotes/reviewedAt 作为页面生命周期字段，同时新增 reviewStatus/reviewFeedback 承载 SOP 审核语义。",
+    "reason": "这样既满足任务文档，又不会破坏现有前端和 service 层。"
+  },
+  "evidence": [
+    "src/app/portfolio/page.tsx",
+    "src/app/portfolio/[id]/page.tsx",
+    "src/lib/services/portfolio-service.ts",
+    "src/app/api/portfolio/route.ts"
+  ]
+}

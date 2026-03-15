@@ -1,0 +1,22 @@
+{
+  "date": "2026-03-15",
+  "executor": "Codex",
+  "task": "龙虾大学 SOP 优化",
+  "goals": [
+    "优化 3 个 SOP 文档：admission.html、practice.html、parent.html",
+    "优化相关 API：enrollment/auto、portfolio、parent/bind",
+    "执行数据库变更并同步 schema 与本地 SQLite",
+    "完成本地测试验证并生成留痕文档"
+  ],
+  "constraints": [
+    "保持现有 Next.js + Drizzle + SQLite 技术栈",
+    "兼容当前作品集页面和家长绑定流程",
+    "不回退工作区中已有未提交改动"
+  ],
+  "deliverables": [
+    "SOP 文档更新",
+    "API 代码更新",
+    "数据库迁移与实际变更执行",
+    "验证报告与审查报告"
+  ]
+}

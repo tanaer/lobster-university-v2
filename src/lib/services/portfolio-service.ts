@@ -23,7 +23,10 @@ export async function submitPortfolio(profileId: string, data: {
   capabilityId?: string;
   content?: string;
   fileUrl?: string;
+  skills?: string[];
   status?: PortfolioStatus;
+  reviewStatus?: "draft" | "pending" | "approved" | "needs_revision" | "rejected";
+  reviewFeedback?: string;
 }) {
   const [portfolio] = await db.insert(portfolios).values({
     id: nanoid(),
@@ -34,7 +37,11 @@ export async function submitPortfolio(profileId: string, data: {
     capabilityId: data.capabilityId || null,
     content: data.content || null,
     fileUrl: data.fileUrl || null,
+    skills: JSON.stringify(data.skills || []),
     status: data.status || "draft",
+    reviewStatus: data.reviewStatus || "pending",
+    reviewFeedback: data.reviewFeedback || null,
+    reviewerNotes: data.reviewFeedback || null,
     createdAt: new Date(),
     updatedAt: new Date(),
   }).returning();
@@ -59,12 +66,42 @@ export async function getPortfolioById(id: string) {
 }
 
 export async function updatePortfolioStatus(id: string, status: PortfolioStatus, notes?: string) {
-  const [updated] = await db.update(portfolios).set({ status, reviewerNotes: notes || null, reviewedAt: status === "verified" || status === "rejected" ? new Date() : null, updatedAt: new Date() }).where(eq(portfolios.id, id)).returning();
+  const reviewStatus =
+    status === "verified"
+      ? "approved"
+      : status === "rejected"
+        ? "rejected"
+        : status === "submitted"
+          ? "pending"
+          : "draft";
+
+  const [updated] = await db.update(portfolios).set({
+    status,
+    reviewStatus,
+    reviewFeedback: notes || null,
+    reviewerNotes: notes || null,
+    reviewedAt: status === "verified" || status === "rejected" ? new Date() : null,
+    updatedAt: new Date(),
+  }).where(eq(portfolios.id, id)).returning();
   return updated;
 }
 
-export async function updatePortfolio(id: string, data: { title?: string; description?: string; type?: PortfolioType; capabilityId?: string; content?: string; fileUrl?: string }) {
-  const [updated] = await db.update(portfolios).set({ ...data, updatedAt: new Date() }).where(eq(portfolios.id, id)).returning();
+export async function updatePortfolio(id: string, data: { title?: string; description?: string; type?: PortfolioType; capabilityId?: string; content?: string; fileUrl?: string; skills?: string[] }) {
+  const updateData: Record<string, unknown> = {
+    title: data.title,
+    description: data.description,
+    type: data.type,
+    capabilityId: data.capabilityId,
+    content: data.content,
+    fileUrl: data.fileUrl,
+    updatedAt: new Date(),
+  };
+
+  if (data.skills) {
+    updateData.skills = JSON.stringify(data.skills);
+  }
+
+  const [updated] = await db.update(portfolios).set(updateData).where(eq(portfolios.id, id)).returning();
   return updated;
 }
 

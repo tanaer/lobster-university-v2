@@ -20,19 +20,58 @@
     <div class="sop-id">SOP-PRAC-002</div>
     <h3>作品集管理流程</h3>
     <table><tr><th>项目</th><th>内容</th></tr>
-        <tr><td><strong>触发</strong></td><td>学员完成作品</td></tr>
+        <tr><td><strong>触发</strong></td><td>学员提交作品</td></tr>
         <tr><td><strong>执行</strong></td><td>实践中心</td></tr>
         <tr><td><strong>验收</strong></td><td>质量监控中心</td></tr>
     </table>
-    <div class="checklist"><h4>作品标准</h4>
-        <label>☐ 有实际产出</label><label>☐ 有过程记录</label>
-        <label>☐ 有质量评估</label><label>☐ 可追溯验证</label>
+    
+    <div class="info">
+        <h4>作品提交标准</h4>
+        <table>
+            <tr><th>字段</th><th>要求</th><th>验证规则</th></tr>
+            <tr><td>title</td><td>作品标题</td><td>2-100 字符，必填</td></tr>
+            <tr><td>description</td><td>作品描述</td><td>50-500 字符，必填</td></tr>
+            <tr><td>url</td><td>作品链接</td><td>必填，必须是可访问 URL</td></tr>
+            <tr><td>skills</td><td>关联技能</td><td>必填，至少 1 项，需与作品主题一致</td></tr>
+            <tr><td>type</td><td>作品类型</td><td>系统字段，按枚举值归档</td></tr>
+        </table>
     </div>
-    <div class="steps"><h4>流程步骤</h4><ol>
+    <h4>质量要求</h4>
+    <table>
+        <tr><th>维度</th><th>要求</th></tr>
+        <tr><td>真实性</td><td>必须为真实作品，不得提交占位页、空白页或无法核验内容</td></tr>
+        <tr><td>完整性</td><td>作品链接、文字描述、技能标签需能完整说明成果</td></tr>
+        <tr><td>可评估性</td><td>审核人员可依据链接、描述与证据链完成质量判断</td></tr>
+    </table>
+
+    <div class="steps"><h4>审核流程</h4><ol>
+        <li><strong>字段验证</strong>：系统自动检查 title、description、url、skills 是否完整</li>
+        <li><strong>URL 验证</strong>：检查链接格式与可访问性</li>
+        <li><strong>自动审核</strong>：校验描述长度、字段完整度并生成初步反馈</li>
+        <li><strong>人工审核</strong>：评估质量、真实性、技能匹配度</li>
+        <li><strong>审核结果</strong>：通过则归档，不通过则返回修改意见</li>
+    </ol></div>
+    
+    <div class="checklist"><h4>作品验收标准</h4>
+        <label>☐ 必填字段完整</label>
+        <label>☐ 标题符合规范（2-100 字符）</label>
+        <label>☐ 描述长度满足 50-500 字</label>
+        <label>☐ 链接有效且可访问</label>
+        <label>☐ 技能标签已记录</label>
+        <label>☐ 内容真实可验证</label>
+    </div>
+
+    <div class="steps"><h4>管理流程</h4><ol>
         <li>收集学员作品</li><li>作品质量评估</li><li>建立证据链</li>
         <li>归档存储</li><li>维护展示页面</li><li>定期抽查质量</li>
     </ol></div>
-    <p><strong>时间：</strong>作品提交后 3 天评估</p>
+    <div class="checklist"><h4>验收结果</h4>
+        <label>☐ 作品集记录已创建</label>
+        <label>☐ 审核状态已更新</label>
+        <label>☐ 审核反馈已保留</label>
+        <label>☐ 学员已收到提交通知或退回意见</label>
+    </div>
+    <p><strong>输出：</strong>作品集记录 + 审核状态 + 审核反馈 + 通知结果<br><strong>时间：</strong>自动审核即时完成，人工审核 1-3 天</p>
 </div>
 
 <div class="sop-card">

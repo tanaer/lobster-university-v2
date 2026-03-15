@@ -19,6 +19,8 @@ export const users = sqliteTable("users", {
   exp: integer("exp").default(0),
   streak: integer("streak").default(0), // 连续学习天数
   totalStudyTime: integer("total_study_time").default(0), // 总学习时长(分钟)
+  parentOnboardingCompleted: integer("parent_onboarding_completed", { mode: "boolean" }).default(false),
+  parentReportSubscription: text("parent_report_subscription").default("weekly"),
 });
 
 // 会话表 (Better Auth)
