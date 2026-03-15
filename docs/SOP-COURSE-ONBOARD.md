@@ -213,6 +213,7 @@ UPDATE skill_courses SET published = 1 WHERE id = '<course_id>';
 |------|------|------|------|
 | 2026-03-14 | 120门新课程英文未翻译、练考敷衍 | 脚本批量生成，未经教授分析 | 建立本 SOP |
 | 2026-03-14 | objectives 模板化、含英文 | SOP 验收清单缺少 objectives 检查项，无自动化验收 | 新增 objectives 验收标准 + course-qa.sh 自动化脚本 |
+| 2026-03-15 | 98门课程lessons为空、77门英文未翻译 | 教授研判通过后直接published=1，跳过验收脚本 | 新增"研判后强制检查清单"，严禁跳过course-qa.sh |
 | 2026-03-13 | 课程质量参差不齐 | 无统一质量标准 | 制定课程设计原则 |
 
 ---
