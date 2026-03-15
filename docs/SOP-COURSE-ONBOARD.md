@@ -89,6 +89,19 @@ bash /root/.openclaw/workspace/lobster-university/scripts/course-qa.sh
 
 脚本检查所有 published=1 的课程是否符合质量标准。不通过则不允许上架。
 
+**验收脚本必须检查项：**
+- [ ] lessons 字段不为空且不是空数组 `[]`
+- [ ] lessons 数量 >= 4
+- [ ] 每个 lesson 必须包含 title、duration、type 字段
+- [ ] type 必须是 learn/practice/assess 之一
+- [ ] name 和 description 是中文（不含英文句子）
+
+**如果验收失败，必须：**
+1. 将未通过的课程 `published = 0`
+2. 派教授逐门补充 lessons
+3. 重新运行验收脚本直到通过
+4. 才能执行上架操作
+
 ### Step 5: 上架
 
 验收通过后：
@@ -151,7 +164,50 @@ JSON 格式，包含 name, description, lessons 字段
 
 ---
 
-## 四、历史教训
+## 五、教授研判后的上线流程（SOP-COUNCIL-004 补充）
+
+教授研判通过 ≠ 可以直接上架。
+
+### 研判通过后的强制检查清单
+
+研判通过后，必须按以下流程执行：
+
+```
+研判通过 → 生成课程数据 → 设 published=0 → 运行 course-qa.sh → 通过 → 上架
+                ↓                           ↓
+            补充 lessons                不通过
+                ←←←←←←←←←←←←←←←←←←←
+```
+
+**Step 1: 生成课程数据时设 published=0**
+```sql
+INSERT INTO skill_courses (id, name, code, description, module, category, 
+  duration, level, objectives, lessons, prerequisites, published, created_at, updated_at)
+VALUES (..., 0, ...);  -- published = 0
+```
+
+**Step 2: 运行验收脚本**
+```bash
+bash /root/.openclaw/workspace/lobster-university/scripts/course-qa.sh
+```
+
+**Step 3: 如果验收失败，必须修复**
+- QA-005 (缺少lessons) → 派教授逐门补充
+- QA-006 (lessons少于4个) → 补充课时
+- 其他错误 → 按 SOP 修复
+
+**Step 4: 验收通过后上架**
+```sql
+UPDATE skill_courses SET published = 1 WHERE id = '<course_id>';
+```
+
+### 严禁行为
+
+❌ **严禁研判通过后直接 `published = 1`**
+❌ **严禁跳过 course-qa.sh 直接上架**
+❌ **严禁批量上架未经验收的课程**
+
+违反以上规定，按教务处事故处理。
 
 | 日期 | 问题 | 根因 | 修复 |
 |------|------|------|------|
