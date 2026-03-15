@@ -5,7 +5,7 @@
       "message": "8条职业路径 | 343门课程 | 20个SOP文件",
       "icon": "👑",
       "sop_count": 3,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
         "管理8条职业路径",
         "监督20个SOP执行",
@@ -32,7 +32,7 @@
       "message": "发现问题：",
       "icon": "🔍",
       "sop_count": 6,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
         "监控343门课程质量",
         "course-qa.sh 自动验收",
@@ -50,17 +50,17 @@
       "message": "343门课程 | 33个分类 | 基础课包16门",
       "icon": "📚",
       "sop_count": 4,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
-        "JD扫描提案：77条待研判",
+        "JD扫描提案：105条待研判",
         "基础课包维护：16门",
         "每30分钟扫描BOSS/X/小红书"
       ],
-      "active_work": "管理343门课程 | JD提案77条 | 基础课包16门",
+      "active_work": "管理343门课程 | JD提案105条 | 基础课包16门",
       "achievements": [
         "课程总数343门",
         "基础课包16门",
-        "JD提案77条"
+        "JD提案105条"
       ],
       "sops": [
         {
@@ -84,7 +84,7 @@
       "message": "学员0名 | 在读0名 | 邀请码9个(已用0)",
       "icon": "🎓",
       "sop_count": 3,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
         "管理0名学员档案",
         "邀请码系统：9个",
@@ -115,18 +115,18 @@
     },
     "学生工作处": {
       "status": "normal",
-      "message": "在读0名 | 选课35480次 | 家长绑定0个",
+      "message": "在读0名 | 选课35744次 | 家长绑定0个",
       "icon": "👥",
       "sop_count": 3,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
         "跟踪0名在读学员",
-        "选课管理35480次",
+        "选课管理35744次",
         "学习预警"
       ],
-      "active_work": "在读0名 | 选课35480次",
+      "active_work": "在读0名 | 选课35744次",
       "achievements": [
-        "选课35480次",
+        "选课35744次",
         "家长绑定0个",
         "预警机制运行中"
       ],
@@ -145,7 +145,7 @@
       "message": "考核系统就绪",
       "icon": "📝",
       "sop_count": 3,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
         "考核系统待命",
         "题库建设中",
@@ -178,7 +178,7 @@
       "message": "无异常",
       "icon": "⚖️",
       "sop_count": 2,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
         "日常巡查",
         "违纪处理流程维护",
@@ -195,7 +195,7 @@
       "message": "实训平台正常 ✅",
       "icon": "🔧",
       "sop_count": 3,
-      "updated_at": "2026-03-15T10:55:08",
+      "updated_at": "2026-03-15T11:05:11",
       "work_plan": [
         "实训平台维护",
         "作品集管理",
@@ -269,33 +269,33 @@
   },
   "recent_logs": [
     {
-      "time": "2026-03-15 10:55",
+      "time": "2026-03-15 11:05",
+      "dept": "IT部门",
+      "action": "3af4535 chore: SOP优化、schema变更、council-state更新、入学/portfolio/parent API改进"
+    },
+    {
+      "time": "2026-03-15 11:05",
       "dept": "IT部门",
       "action": "4bd2f79 fix: 从 events 表读取真实 SOP 执行统计数据"
     },
     {
-      "time": "2026-03-15 10:55",
+      "time": "2026-03-15 11:05",
       "dept": "IT部门",
       "action": "0555626 feat: 基础技能包分组展示 + 新课上线入口"
     },
     {
-      "time": "2026-03-15 10:55",
+      "time": "2026-03-15 11:05",
       "dept": "IT部门",
       "action": "83c9dd1 refactor: 去掉所有学习时间描述"
     },
     {
-      "time": "2026-03-15 10:55",
+      "time": "2026-03-15 11:05",
       "dept": "IT部门",
       "action": "30384d2 feat: 校务委员会事件仪表盘 + Hook 接入 SOP"
-    },
-    {
-      "time": "2026-03-15 10:55",
-      "dept": "IT部门",
-      "action": "9938b3d feat: 事件 Hook 系统 Phase 1-3"
     }
   ],
   "_meta": {
-    "last_updated": "2026-03-15T10:55:08",
+    "last_updated": "2026-03-15T11:05:11",
     "data_sources": [
       "lobster.db",
       "SOP文件",
@@ -311,7 +311,7 @@
       "base_courses": 16,
       "total_students": 0,
       "active_students": 0,
-      "total_enrollments": 35480,
+      "total_enrollments": 35744,
       "career_paths": 8,
       "template_obj": 0,
       "few_lessons": 0,
